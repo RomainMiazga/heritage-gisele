@@ -1,17 +1,136 @@
 ---
+import MainLayout from '../layouts/MainLayout.astro';
 
+const title = "Accueil - L'Héritage de Gisèle";
+const description = "Découvrez l'univers de l'Héritage de Gisèle : création artisanale de chapelets uniques et personnalisés, faits main en France.";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<MainLayout title={title} description={description}>
+  
+  <section class="hero">
+    <div class="hero-content">
+      <h1>L'Héritage de Gisèle</h1>
+      <p>Créations artisanales de chapelets uniques</p>
+      <a href="/catalogue" class="btn-hero-collection">Explorer la collection</a>
+    </div>
+  </section>
+
+  <section class="arguments container">
+    <div class="arg">
+      <i class="fas fa-hand-sparkles"></i>
+      <h3>Fait Main</h3>
+      <p>Chaque grain est noué avec patience dans mon atelier en France.</p>
+    </div>
+    <div class="arg">
+      <i class="fa-solid fa-heart"></i>
+      <h3>Avec Passion</h3>
+      <p>Un savoir-faire artisanal pour des objets de foi durables.</p>
+    </div>
+    <div class="arg">
+      <i class="fas fa-envelope-open-text"></i>
+      <h3>Sur-Mesure</h3>
+      <p>Imaginez le chapelet qui vous accompagne, je le crée pour vous.</p>
+    </div>
+  </section>
+
+  <section class="personnalisation-cta">
+    <div class="container">
+      <div class="custom-box">
+        <i class="fas fa-gem gold-icon"></i>
+        <h2>Une Création à votre Image</h2>
+        <p>
+          Que ce soit pour un baptême, une communion, un mariage ou pour votre prière quotidienne, 
+          je vous accompagne dans la création d'un chapelet unique. 
+          Choisissez vos pierres, la couleur du fil et les médailles qui font sens pour vous.
+        </p>
+        <a href="/personnalisation" class="btn-hero-collection">Demander un devis personnalisé</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="instagram-feed container">
+    <h3>Suivez l'Atelier</h3>
+    <p>Découvrez les coulisses des créations et les nouvelles pierres arrivées à l'atelier.</p>
+    <div class="insta-grid">
+        <img src="/images/atelier1.jpg" alt="Détail perles" />
+        <img src="/images/atelier2.jpg" alt="Travail en cours" />
+        <img src="/images/atelier3.jpg" alt="Chapelet terminé" />
+    </div>
+    <a href="https://instagram.com/ton_compte" target="_blank" class="btn-insta">
+        <i class="fab fa-instagram"></i> @lheritage_de_gisele
+    </a>
+  </section>
+
+</MainLayout>
+
+<style>
+  /* Styles spécifiques à l'accueil */
+  .hero {
+    position: relative;
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/images/hero-bg.png') center/cover no-repeat;
+    height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+  }
+  .hero h1 {
+    font-family: var(--police-titre); 
+    font-size: clamp(3.5em, 10vw, 5.5em);
+    margin-bottom: 0.2em;
+    text-shadow: 2px 2px 15px rgba(0,0,0,0.6);
+  }
+  .hero p {
+    font-size: 1.5em;
+    font-style: italic;
+    margin-bottom: 2em;
+  }
+
+  .arguments {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    padding: 80px 20px;
+    text-align: center;
+  }
+  .arg i { font-size: 2.5em; color: var(--couleur-primaire); margin-bottom: 20px; }
+  .arg h3 { font-family: var(--police-titre); font-size: 2em; color: var(--couleur-sombre); }
+
+  .personnalisation-cta { background-color: #fbf9fc; padding: 60px 0; }
+  .custom-box {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    border: 1px solid var(--couleur-primaire);
+    border-radius: 20px;
+    background: white;
+    text-align: center;
+  }
+  .gold-icon { font-size: 3em; color: var(--couleur-accent); margin-bottom: 20px; }
+
+  .instagram-feed { text-align: center; padding: 80px 20px; }
+  .instagram-feed h3 { font-family: var(--police-titre); font-size: 2.5em; }
+  .insta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    max-width: 600px;
+    margin: 30px auto;
+  }
+  .insta-grid img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+  
+  .btn-insta { 
+    display: inline-block; 
+    padding: 12px 25px; 
+    background: var(--couleur-sombre); 
+    color: white !important; 
+    border-radius: 30px; 
+    text-decoration: none; 
+    margin-top: 20px;
+    transition: 0.3s;
+  }
+  .btn-insta:hover { opacity: 0.9; transform: scale(1.05); }
+
+  .container { max-width: 1200px; margin: 0 auto; }
+</style>

@@ -1,0 +1,192 @@
+---
+import Layout from '../layouts/MainLayout.astro';
+---
+
+<Layout title="Vos Personnalisations - L'Héritage de Gisèle">
+  <main>
+    <section class="page-header">
+        <h1 class="page-title" style="color: #7b4b94; margin-top: 0;">Créations Sur-Mesure</h1>
+        <p class="page-subtitle">Composons ensemble le chapelet qui vous accompagnera.</p>
+    </section>
+
+    <div class="form-container">
+        <form id="perso-form">
+            
+            <div class="form-group">
+                <label class="titre-champ"><i class="fas fa-spa"></i> Choix des perles - Je vous Salue Marie</label>
+                <div class="checkbox-grid">
+                    <label class="perle-card">
+                        <input type="radio" name="perles_ave" value="Quartz Rose" required>
+                        <img src="/images/perle-quartz-rose.jpg" alt="Quartz Rose" onerror="this.src='/images/placeholder.jpg';">
+                        <span>Quartz Rose</span>
+                    </label>
+                    <label class="perle-card">
+                        <input type="radio" name="perles_ave" value="Pierre de Lune">
+                        <img src="/images/perle-pierre-lune.jpg" alt="Pierre de Lune" onerror="this.src='/images/placeholder.jpg';">
+                        <span>Pierre de Lune</span>
+                    </label>
+                    <label class="perle-card">
+                        <input type="radio" name="perles_ave" value="Bois d'Olivier">
+                        <img src="/images/perle-bois-olivier.jpg" alt="Bois d'Olivier" onerror="this.src='/images/placeholder.jpg';">
+                        <span>Bois d'Olivier</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="titre-champ"><i class="fas fa-leaf"></i> Choix des perles - Notre Père</label>
+                <div class="checkbox-grid">
+                    <label class="perle-card">
+                        <input type="radio" name="perles_pater" value="Quartz Rose" required>
+                        <img src="/images/perle-quartz-rose.jpg" alt="Quartz Rose" onerror="this.src='/images/placeholder.jpg';">
+                        <span>Quartz Rose</span>
+                    </label>
+                    <label class="perle-card">
+                        <input type="radio" name="perles_pater" value="Améthyste">
+                        <img src="/images/perle-amethyste.jpg" alt="Améthyste" onerror="this.src='/images/placeholder.jpg';">
+                        <span>Améthyste</span>
+                    </label>
+                    <label class="perle-card">
+                        <input type="radio" name="perles_pater" value="Onyx Noir">
+                        <img src="/images/perle-onyx.jpg" alt="Onyx Noir" onerror="this.src='/images/placeholder.jpg';">
+                        <span>Onyx Noir</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="titre-champ"><i class="fas fa-link"></i> Perles de liaison</label>
+                <div class="checkbox-grid">
+                    <label class="perle-card">
+                        <input type="radio" name="perles_liaison" value="Hématite" required>
+                        <img src="/images/perle-hematite.jpg" alt="Hématite" onerror="this.src='/images/placeholder.jpg';">
+                        <span>Hématite</span>
+                    </label>
+                    <label class="perle-card">
+                        <input type="radio" name="perles_liaison" value="Cristal de Roche">
+                        <img src="/images/perle-cristal.jpg" alt="Cristal de Roche" onerror="this.src='/images/placeholder.jpg';">
+                        <span>Cristal de Roche</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="titre-champ"><i class="fas fa-cross"></i> Style de la Croix</label>
+                <div class="checkbox-grid">
+                    <label class="perle-card">
+                        <input type="radio" name="style_croix" value="Croix Argentée" required>
+                        <img src="/images/croix-argentee.jpg" alt="Croix Argentée" onerror="this.src='/images/placeholder.jpg';">
+                        <span>Argentée</span>
+                    </label>
+                    <label class="perle-card">
+                        <input type="radio" name="style_croix" value="Croix Dorée">
+                        <img src="/images/croix-doree.jpg" alt="Croix Dorée" onerror="this.src='/images/placeholder.jpg';">
+                        <span>Dorée</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="titre-champ"><i class="fas fa-medal"></i> Style du Médaillon</label>
+                <div class="checkbox-grid">
+                    <label class="perle-card">
+                        <input type="radio" name="style_medaillon" value="Médaillon Argenté" required>
+                        <img src="/images/medaillon-argente.jpg" alt="Médaillon Argenté" onerror="this.src='/images/placeholder.jpg';">
+                        <span>Argenté</span>
+                    </label>
+                    <label class="perle-card">
+                        <input type="radio" name="style_medaillon" value="Médaille Miraculeuse">
+                        <img src="/images/medaillon-miraculeuse.jpg" alt="Médaille Miraculeuse" onerror="this.src='/images/placeholder.jpg';">
+                        <span>Miraculeuse</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="message" class="titre-champ"><i class="fas fa-pen-fancy"></i> Parlez-moi de votre projet</label>
+                <textarea id="message" name="message" class="form-control" rows="4" required placeholder="Détails, taille souhaitée, prénom à ajouter..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">
+                <i class="fas fa-cart-plus"></i> Ajouter ma création au panier
+            </button>
+        </form>
+    </div>
+  </main>
+</Layout>
+
+<style>
+    .page-header { text-align: center; padding: 60px 20px 40px; background: #fbf9fc; border-bottom: 1px solid #eee; }
+    .form-container { max-width: 800px; margin: 50px auto 80px; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 8px 25px rgba(94, 53, 177, 0.08); }
+    .form-group { margin-bottom: 35px; }
+    .form-group label.titre-champ { display: block; font-weight: bold; color: #5e35b1; margin-bottom: 15px; font-size: 1.2rem; border-bottom: 2px solid #f4f0fa; padding-bottom: 5px; }
+    .form-control { width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Lora', serif; font-size: 1rem; box-sizing: border-box; transition: border-color 0.3s; }
+    .form-control:focus { border-color: #967BB6; outline: none; box-shadow: 0 0 5px rgba(150, 123, 182, 0.3); }
+    
+    .checkbox-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; }
+    .perle-card { cursor: pointer; display: flex; flex-direction: column; align-items: center; text-align: center; background: #fdfaf6; border: 2px solid #eee; border-radius: 12px; padding: 15px 10px; transition: all 0.3s ease; position: relative; }
+    .perle-card img { width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.3s ease; }
+    
+    .perle-card input[type="radio"] { position: absolute; opacity: 0; }
+    
+    .perle-card span { font-weight: bold; color: #5e35b1; font-size: 0.95rem; }
+    .perle-card:hover { border-color: #b39ddb; transform: translateY(-3px); }
+    
+    .perle-card:has(input:checked) { border-color: #7b4b94; background: #f4f0fa; box-shadow: 0 5px 15px rgba(123, 75, 148, 0.2); }
+    .perle-card::after { content: '\f058'; font-family: "Font Awesome 5 Free"; font-weight: 900; position: absolute; top: 10px; right: 10px; color: #7b4b94; font-size: 1.5rem; opacity: 0; transition: opacity 0.3s; }
+    .perle-card:has(input:checked)::after { opacity: 1; }
+
+    .btn-submit { background: #7b4b94; color: white; border: none; padding: 15px 30px; font-size: 1.1rem; font-weight: bold; border-radius: 30px; cursor: pointer; width: 100%; transition: all 0.3s ease; font-family: 'Lora', serif; }
+    .btn-submit:hover { background: #5e35b1; }
+
+    @media (max-width: 768px) { .form-container { padding: 20px; margin: 30px 15px; } .checkbox-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; } }
+</style>
+
+<script>
+    const form = document.getElementById('perso-form');
+    
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(form);
+        
+        // 1. On récupère les choix
+        const perlesAve = formData.get('perles_ave') || 'Non précisé';
+        const perlesPater = formData.get('perles_pater') || 'Non précisé';
+        const perlesLiaison = formData.get('perles_liaison') || 'Non précisé';
+        const styleCroix = formData.get('style_croix') || 'Non précisé';
+        const styleMedaillon = formData.get('style_medaillon') || 'Non précisé';
+        const message = formData.get('message') || '';
+
+        // 2. On crée un résumé de la personnalisation
+        const detailsPerso = `Ave: ${perlesAve} | Pater: ${perlesPater} | Liaison: ${perlesLiaison} | Croix: ${styleCroix} | Médaillon: ${styleMedaillon}\nNote client : ${message}`;
+
+        // 3. On crée l'objet Produit Sur-Mesure
+        const produitSurMesure = {
+            id: 'perso-' + Date.now(), // Un ID unique basé sur l'heure exacte
+            nom: 'Chapelet Sur-Mesure',
+            prix: 'Sur devis', // Le prix n'est pas défini à l'avance
+            image: '/images/placeholder.jpg', // L'image par défaut dans le panier
+            details: detailsPerso, // Le descriptif qu'on a construit
+            quantite: 1
+        };
+
+        // 4. On récupère le panier existant dans le navigateur (ou on en crée un vide)
+        let panier = JSON.parse(localStorage.getItem('panier-gisele')) || [];
+
+        // 5. On ajoute la création au panier
+        panier.push(produitSurMesure);
+
+        // 6. On sauvegarde le tout
+        localStorage.setItem('panier-gisele', JSON.stringify(panier));
+
+        // 7. On envoie le signal à la navbar (le badge se met à jour)
+        window.dispatchEvent(new Event('panierMisAJour'));
+
+        // 8. On prévient le client
+        alert("Votre création a bien été ajoutée au panier !");
+        
+        // 9. On le redirige vers le récapitulatif
+        window.location.href = "/devis"; 
+    });
+</script>

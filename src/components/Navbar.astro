@@ -1,0 +1,134 @@
+---
+const { site_name = "L'Héritage de Gisèle" } = Astro.props;
+// On récupère l'URL de la page actuelle
+const currentPath = Astro.url.pathname;
+---
+
+<header>
+    <nav class="navbar-desktop">
+        <div class="logo">
+            <a href="/">
+                <img src="/images/illustration-gisele.png" alt={`Logo ${site_name}`} class="logo-img">
+            </a>
+        </div>
+        <div class="logo"><a href="/">L'Héritage de Gisèle</a></div>
+        
+        <div class="burger-menu" id="burger-menu">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <ul class="nav-links" id="nav-links">
+            <li><a href="/" class={currentPath === '/' ? 'active' : ''}>Boutique</a></li>
+            <li><a href="/heritage" class={currentPath.includes('/heritage') ? 'active' : ''}>Notre Histoire</a></li>
+            <li><a href="/catalogue" class={currentPath.includes('/catalogue') ? 'active' : ''}>Nos Créations</a></li>
+            <li><a href="/personnalisation" class={currentPath.includes('/personnalisation') ? 'active' : ''}>Vos Personnalisations</a></li>
+            <li><a href="/contact" class={currentPath.includes('/contact') ? 'active' : ''}>Contact</a></li>
+            <li>
+                <a href="/devis" class={`nav-item-cart ${currentPath.includes('/devis') ? 'active' : ''}`}>
+                    <span style="position: relative;">
+                        <i class="fas fa-shopping-basket"></i>
+                        <span class="js-badge-update">0</span>
+                    </span>
+                    <span>Panier</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<nav class="navbar-bottom-mobile">
+    <a href="/" class={`nav-item ${currentPath === '/' ? 'active' : ''}`}><i class="fas fa-store"></i></a>
+    <a href="/heritage" class={`nav-item ${currentPath.includes('/heritage') ? 'active' : ''}`}><i class="fas fa-book-open"></i></a>
+    <a href="/catalogue" class={`nav-item ${currentPath.includes('/catalogue') ? 'active' : ''}`}><i class="fas fa-gem"></i></a>
+    <a href="/personnalisation" class={`nav-item ${currentPath.includes('/personnalisation') ? 'active' : ''}`}><i class="fas fa-wand-magic-sparkles"></i></a>
+    <a href="/devis" class={`nav-item ${currentPath.includes('/devis') ? 'active' : ''}`} style="position: relative;">
+        <i class="fas fa-shopping-bag"></i>
+        <span class="js-badge-update">0</span>
+    </a>
+</nav>
+
+<script>
+    // 1. Menu Burger Mobile
+    const burger = document.getElementById('burger-menu');
+    const links = document.getElementById('nav-links');
+    
+    burger?.addEventListener('click', () => {
+        links?.classList.toggle('active');
+    });
+
+    // 2. Gestion du badge du panier
+    function updateCartCounter() {
+        // On récupère le panier depuis la mémoire du navigateur
+        const panier = JSON.parse(localStorage.getItem('panier-gisele')) || [];
+        
+        // On cible TOUS les badges (Desktop et Mobile)
+        const badges = document.querySelectorAll('.js-badge-update');
+        const totalArticles = panier.length;
+        
+        // On met à jour chaque badge
+        badges.forEach(badge => {
+            badge.innerText = totalArticles;
+            
+            // Si le panier n'est pas vide, on affiche le petit rond violet
+            if (totalArticles > 0) {
+                badge.style.display = 'inline-block';
+            } else {
+                badge.style.display = 'none'; // Sinon on le cache
+            }
+        });
+    }
+
+    // On exécute la fonction dès que le menu est chargé sur la page
+    document.addEventListener('DOMContentLoaded', updateCartCounter);
+    
+    window.addEventListener('panierMisAJour', updateCartCounter);
+</script>
+
+<style>
+    /* Styles pour la version ordinateur (liens textes) */
+    .nav-links a {
+        text-decoration: none;
+        color: #967BB6;
+        transition: color 0.3s ease;
+    }
+
+    /* LA COULEUR DORÉE POUR LE LIEN ACTIF (JUSTE LE TEXTE) */
+    .nav-links a.active {
+        color: #D4AF37; /* Doré élégant */
+        font-weight: bold;
+    }
+
+    .nav-item-cart { 
+        display: inline-flex; 
+        align-items: center; 
+        gap: 8px; 
+        text-decoration: none; 
+        color: inherit; 
+    }
+    
+    /* Styles pour la barre de navigation mobile (icônes) */
+    .navbar-bottom-mobile .nav-item {
+        color: #967BB6; /* Couleur par défaut grisée */
+        transition: all 0.3s ease;
+    }
+
+    /* L'ICÔNE ACTIVE EN DORÉ SUR MOBILE */
+    .navbar-bottom-mobile .nav-item.active {
+        color: #D4AF37; /* Doré élégant */
+        transform: translateY(-3px) scale(1.1); /* Petit effet de surélévation élégant */
+    }
+
+    /* Style du badge du panier */
+    .js-badge-update {
+        background: #967BB6; /* Violet Gisèle */
+        color: white;
+        font-size: 0.70em;
+        padding: 2px 6px;
+        border-radius: 50%;
+        position: absolute;
+        top: -10px;
+        right: -12px;
+        display: none; /* Apparaît via JS quand > 0 */
+        font-weight: bold;
+    }
+</style>

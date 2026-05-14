@@ -1,0 +1,351 @@
+/* =========================================
+   VARIABLES & STYLES GLOBAUX
+   ========================================= */
+:root {
+    --couleur-primaire: #b39ddb; /* Lilas doux */
+    --couleur-sombre: #5e35b1; /* Violet plus foncé pour le texte */
+    --couleur-accent: #d4af37; /* Or antique */
+    --couleur-bouton: #ffffff; /* Blanc (Correction : 6 lettres) */
+    --couleur-fond: #faf8fc; /* Blanc très légèrement violacé */
+    --police-titre: 'Great Vibes', cursive;
+    --police-texte: 'Lora', serif;
+}
+
+body {
+    font-family: var(--police-texte);
+    margin: 0; 
+    /* Un dégradé très subtil pour donner de la profondeur */
+    background: radial-gradient(circle at top, #faf8fc 0%, #f3eff7 100%);
+    color: #4a4a4a;
+    padding-top: 80px; 
+}
+
+/* =========================================
+   HEADER & NAVBAR (DESKTOP) - Version Premium
+   ========================================= */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    /* Effet Glassmorphism : semi-transparent avec flou */
+    background: rgba(255, 255, 255, 0.92); 
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    /* Ombre douce teintée en violet pour rappeler ton thème */
+    box-shadow: 0 4px 20px rgba(94, 53, 177, 0.08); 
+    transition: all 0.3s ease;
+}
+
+.navbar-desktop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 8%; /* Plus d'espace respirable sur les côtés */
+    max-width: 1400px; /* Évite que la navbar s'étire trop sur les grands écrans */
+    margin: 0 auto; /* Centre le contenu */
+}
+
+.logo {
+    font-family: var(--police-titre);
+    font-size: 2.8em; /* Légèrement plus grand pour plus de prestance */
+    color: var(--couleur-sombre);
+    letter-spacing: 1px;
+}
+
+.logo a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease;
+}
+
+.logo a:hover {
+    transform: scale(1.02); /* Petit effet de zoom sur le logo au survol */
+}
+
+.logo-img {
+    height: 60px; /* Taille affinée pour un rendu plus chic */
+    width: auto;
+    object-fit: contain;
+}
+
+.nav-links { 
+    display: flex; 
+    list-style: none; 
+    gap: 35px; /* Liens un peu plus espacés */
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+.nav-links a { 
+    color: var(--couleur-sombre); 
+    text-decoration: none; 
+    font-weight: 500; /* 500 est souvent plus élégant que "bold" (700) */
+    font-size: 1.05rem;
+    position: relative; /* Nécessaire pour l'animation du soulignement */
+    padding-bottom: 5px;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover { 
+    color: var(--couleur-accent); 
+}
+
+/* Animation d'une ligne dorée qui part du centre au survol */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: var(--couleur-accent);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+.nav-links a:hover::after {
+    width: 100%; /* La ligne s'étend sur toute la largeur au survol */
+}
+
+/* Style du badge pour Desktop affiné */
+.badge-panier {
+    background: var(--couleur-accent); /* Or au lieu du rouge classique */
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 2px 7px;
+    border-radius: 50%;
+    border: 2px solid white;
+    position: absolute;
+    top: -8px;
+    right: -12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Éléments masqués sur Desktop */
+.burger-menu {
+    display: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--couleur-sombre);
+}
+
+.navbar-bottom-mobile {
+    display: none;
+}
+
+/* =========================================
+   RESPONSIVE (SMARTPHONES - max 768px)
+   ========================================= */
+@media (max-width: 768px) {
+    body {
+        padding-top: 70px; /* Moins d'espace en haut sur mobile */
+        padding-bottom: 70px; 
+    }
+
+    .logo { 
+        font-size: 2em; 
+    }
+
+    .burger-menu {
+        display: block; 
+    }
+
+    .nav-links {
+        position: absolute;
+        top: 70px; /* ⚠️ Ajuste cette valeur selon la hauteur réelle de ton <header> */
+        left: 0;
+        width: 100%;
+        background-color: #ffffff; /* Fond blanc pour cacher ce qu'il y a derrière */
+        flex-direction: column;    /* Les liens s'empilent à la verticale */
+        align-items: center;
+        padding: 20px 0;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* Petite ombre esthétique */
+        z-index: 999; /* Pour passer par-dessus le reste du site */
+
+        /* L'astuce pour l'animation de déroulement */
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-20px); /* Légèrement remonté */
+        transition: all 0.3s ease-in-out;
+    }
+    
+    .navbar-desktop {
+        display: flex;
+        justify-content: space-between; /* Pousse le logo à gauche et le burger à droite */
+        align-items: center;            /* Centre verticalement les éléments */
+        padding: 10px 20px;             /* Ajoute 20px d'espace sur les côtés */
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px; /* Espace entre l'image et le texte */
+    }
+    
+    .burger-menu {
+        padding: 5px;
+        margin-left: 20px; /* Espace minimum de sécurité avec le titre */
+    }
+
+    .nav-links.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0); /* Le menu descend à sa place */
+    }
+
+    .nav-links li {
+        margin: 15px 0;
+        list-style: none; /* Enlève les puces si ce n'est pas déjà fait */
+    }
+    
+    .nav-links.open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0); /* Redescend à sa position normale */
+    }
+
+/* --- Navbar Bas d'écran --- */
+    .navbar-bottom-mobile {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        background: var(--couleur-fond); /* <-- FOND LILAS TRÈS DOUX ICI */
+        border-top: 1px solid rgba(179, 157, 219, 0.4);
+        box-shadow: 0 -4px 15px rgba(94, 53, 177, 0.08);
+        z-index: 1000;
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .navbar-bottom-mobile .nav-item {
+        color: var(--couleur-sombre); /* <-- ICÔNES EN VIOLET ICI */
+        font-size: 1.4rem;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: color 0.3s;
+    }
+
+    .cart-icon {
+        position: relative;
+    }
+
+    .cart-badge {
+        position: absolute;
+        top: -5px;
+        right: -8px;
+        background-color: var(--couleur-accent); /* Remplacement du rouge par la couleur or */
+        color: white;
+        border-radius: 50%;
+        padding: 2px 6px;
+        font-size: 0.7rem;
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        border: 1px solid white;
+    }
+}
+
+/* =========================================
+   PAGE BOUTIQUE & GRILLE (Contenu)
+   ========================================= */
+.container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.page-title {
+    font-family: var(--police-titre);
+    color: var(--couleur-sombre);
+    font-size: 4em;
+    margin-bottom: 10px;
+}
+
+.grille-produits {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.carte-produit {
+    background: white;
+    border-radius: 15px; /* Plus arrondi = plus doux */
+    overflow: hidden;
+    /* Ombre portée plus diffuse et colorée (lavande) */
+    box-shadow: 0 8px 20px rgba(94, 53, 177, 0.05);
+    border: none; /* On enlève la bordure qui durcit le design */
+    transition: transform 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.carte-produit:hover { 
+    transform: translateY(-5px); 
+}
+
+.btn-ajouter {
+    background: var(--couleur-accent);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.3s;
+}
+
+.btn-ajouter:hover { 
+    background: #b5952f; 
+}
+
+/* =========================================
+   FOOTER & BOUTON HERO
+   ========================================= */
+.main-footer {
+    text-align: center;
+    padding: 30px 20px;
+    background: white;
+    margin-top: 60px;
+    border-top: 1px solid #eee;
+}
+
+/* Style du bouton principal (Hero) */
+.btn-hero-collection {
+    display: inline-block;
+    text-decoration: none;
+    padding: 15px 35px;
+    background-color: #7b4b94; 
+    color: white !important;
+    font-weight: bold;
+    font-family: var(--police-texte);
+    border-radius: 30px;
+    border: 1px solid var(--couleur-bouton); 
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    margin-top: 10px;
+}
+
+/* Effet au survol */
+.btn-hero-collection:hover {
+    background-color: transparent;
+    color: white !important;
+    transform: translateY(-3px); /* Le bouton monte légèrement */
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    border-color: white; /* Change la bordure en blanc au survol */
+}

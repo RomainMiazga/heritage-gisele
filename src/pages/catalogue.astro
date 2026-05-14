@@ -1,0 +1,112 @@
+---
+import { getCollection } from 'astro:content';
+import MainLayout from '../layouts/MainLayout.astro';
+
+// On récupère automatiquement tous les fichiers .md du dossier creations
+const toutesLesCreations = await getCollection('creations');
+
+const title = "Nos Créations - L'Héritage de Gisèle";
+---
+
+<MainLayout title={title}>
+  <section class="catalogue-top container">
+    <h1 class="page-title">Nos Créations</h1>
+    <p>Chaque nœud est une intention, chaque perle un héritage.</p>
+  </section>
+
+  <div class="grid-produits container">
+    {toutesLesCreations.map((crea) => (
+      <div class="card-produit">
+        <img src={`/images/${crea.data.image_url}`} alt={crea.data.nom} />
+        
+        <h3>{crea.data.nom}</h3>
+        <p class="produit-prix">{crea.data.prix} €</p>
+        <p class="produit-description">{crea.data.description}</p>
+
+        {crea.data.stock > 0 ? (
+          <button 
+            class="btn-ajouter js-add-to-cart" 
+            data-id={crea.data.id} 
+            data-nom={crea.data.nom}
+            data-prix={crea.data.prix}
+          >
+            <i class="fas fa-shopping-basket"></i> Sélectionner
+          </button>
+        ) : (
+          <span class="btn-ajouter btn-disabled">Victime de son succès</span>
+        )}
+      </div>
+    ))}
+  </div>
+</MainLayout>
+
+<script>
+  // Logique du panier en LocalStorage
+  const buttons = document.querySelectorAll('.js-add-to-cart');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = {
+        id: btn.dataset.id,
+        nom: btn.dataset.nom,
+        prix: btn.dataset.prix
+      };
+
+      // 1. Récupérer le panier actuel
+      let panier = JSON.parse(localStorage.getItem('panier-gisele') || '[]');
+      
+      // 2. Ajouter le nouveau produit au panier
+      panier.push(item);
+      
+      // 3. Sauvegarder le panier mis à jour dans le navigateur
+      localStorage.setItem('panier-gisele', JSON.stringify(panier));
+
+      // 4. On envoie le signal magique à la navbar !
+      window.dispatchEvent(new Event('panierMisAJour'));
+
+      // 5. On prévient le client
+      alert(`${item.nom} a bien été ajouté à votre panier !`);
+    });
+  });
+</script>
+
+<style>
+  /* On réutilise tes styles du catalogue.php mais adaptés à Astro */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+  .catalogue-top { text-align: center; padding: 60px 0; }
+  .page-title { font-family: var(--police-titre); font-size: 4em; color: var(--couleur-sombre); }
+  
+  .grid-produits {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    padding-bottom: 80px;
+  }
+
+  .card-produit {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid #eee;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    transition: 0.3s;
+  }
+  .card-produit:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+
+  .card-produit img { width: 100%; height: 250px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; }
+  .produit-prix { color: var(--couleur-sombre); font-weight: bold; font-size: 1.2em; margin: 10px 0; }
+  .produit-description { font-size: 0.9em; color: #666; margin-bottom: 20px; flex-grow: 1; }
+
+  .btn-ajouter {
+    background: var(--couleur-sombre);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .btn-disabled { background: #ccc; cursor: not-allowed; }
+</style>

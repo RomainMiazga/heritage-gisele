@@ -1,0 +1,32 @@
+---
+const { site_name = "L'Héritage de Gisèle" } = Astro.props;
+const isNotHome = Astro.url.pathname !== "/";
+
+// Simulation de tes "Coups de cœur" (Plus tard, on piochera dans tes fichiers Markdown/JSON)
+const coupsDeCoeur = [
+  { nom: "Rosaire Perles d'Eau", prix: "45,00", image_url: "chapelet1.jpg", id: 101 },
+  { nom: "Dizainier Bois", prix: "15,00", image_url: "chapelet2.jpg", id: 102 },
+];
+---
+
+
+
+<footer class="main-footer">
+    <div class="footer-content">
+        <p class="citation-footer">"De génération en génération, de cœur à cœur."</p>
+        <p class="copyright">
+            &copy; {new Date().getFullYear()} {site_name}. Tous droits réservés.
+        </p>
+        <div class="footer-links">
+            <a href="/mentions-legales">Mentions légales</a> | 
+            <a href="/cgv">CGV</a> | 
+            <a href="/contact">Contact</a>
+        </div>
+    </div>
+</footer>
+
+<style>
+    .pre-footer { margin-top: 60px; border-top: 1px solid #eee; padding-top: 40px; text-align: center; }
+    .pre-footer h3 { font-family: 'Great Vibes', cursive; font-size: 2.5em; color: #4a3b52; }
+    /* ... tes autres styles de footer ... */
+</style>
