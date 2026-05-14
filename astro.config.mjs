@@ -1,8 +1,7 @@
 import { defineConfig } from 'astro/config';
-import node from '@astrojs/node';
+import vercel from '@astrojs/vercel/serverless'; // Import de l'adaptateur
 
 export default defineConfig({
-  adapter: node({
-    mode: 'standalone',
-  }),
+  output: 'server', // FORCE LE MODE SERVEUR (Indispensable pour l'API)
+  adapter: vercel(), // DIT À ASTRO D'UTILISER VERCEL
 });
