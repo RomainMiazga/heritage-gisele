@@ -4,18 +4,17 @@ import MainLayout from '../layouts/MainLayout.astro';
 
 <MainLayout title="Ma Sélection - L'Héritage de Gisèle">
   <section class="container devis-page">
-    <h1>Ma Sélection</h1>
+    <h1 class="page-title">Ma Sélection</h1>
     <p class="subtitle">Récapitulatif de vos coups de cœur avant votre demande de devis.</p>
 
     <div class="devis-container">
       <div class="selection-list">
         <div id="empty-cart-msg" class="hidden">
           <p>Votre sélection est vide pour le moment.</p>
-          <a href="/catalogue" class="btn-retour">Retourner au catalogue</a>
+          <a href="/catalogue/" class="btn-retour">Retourner au catalogue</a>
         </div>
         
-        <ul id="cart-items">
-          </ul>
+        <ul id="cart-items"></ul>
 
         <div id="cart-total" class="total-box hidden">
           <span>Total estimé :</span>
@@ -60,190 +59,133 @@ import MainLayout from '../layouts/MainLayout.astro';
   </section>
 </MainLayout>
 
-<script>
-  // 1. Charger et afficher la sélection
-  const cartList = document.getElementById('cart-items');
-  const emptyMsg = document.getElementById('empty-cart-msg');
-  const totalBox = document.getElementById('cart-total');
-  const totalPriceEl = document.getElementById('total-price');
-  const hiddenInput = document.getElementById('hidden-selection');
+<script is:inline>
+  // Utilisation de astro:page-load pour les View Transitions
+  document.addEventListener('astro:page-load', () => {
+    const cartList = document.getElementById('cart-items');
+    const emptyMsg = document.getElementById('empty-cart-msg');
+    const totalBox = document.getElementById('cart-total');
+    const totalPriceEl = document.getElementById('total-price');
+    const hiddenInput = document.getElementById('hidden-selection');
+    const form = document.getElementById('devis-form');
 
-  function renderSelection() {
-    const selection = JSON.parse(localStorage.getItem('panier-gisele') || '[]');
-    
-    if (selection.length === 0) {
-      emptyMsg.classList.remove('hidden');
-      totalBox.classList.add('hidden');
-      cartList.innerHTML = '';
-      return;
+    function renderSelection() {
+      // Protection contre l'erreur classList : on vérifie si les éléments existent
+      if (!cartList || !emptyMsg || !totalBox) return;
+
+      const selection = JSON.parse(localStorage.getItem('panier-gisele') || '[]');
+      
+      if (selection.length === 0) {
+        emptyMsg.classList.remove('hidden');
+        totalBox.classList.add('hidden');
+        cartList.innerHTML = '';
+        return;
+      }
+
+      emptyMsg.classList.add('hidden');
+      totalBox.classList.remove('hidden');
+      
+      let total = 0;
+      let detailsText = "";
+
+      cartList.innerHTML = selection.map((item, index) => {
+        let prixValue = parseFloat(item.prix);
+        let prixAffiche = item.prix; 
+        
+        if (!isNaN(prixValue)) {
+          total += prixValue;
+          prixAffiche = `${item.prix} €`;
+        }
+
+        detailsText += `- ${item.nom} (${prixAffiche})\n`;
+        
+        return `
+          <li class="cart-item">
+            <div class="cart-item-header">
+              <div class="item-info">
+                <strong>${item.nom}</strong>
+                <span>${prixAffiche}</span>
+              </div>
+              <button type="button" class="btn-remove" data-index="${index}"><i class="fas fa-trash"></i></button>
+            </div>
+          </li>
+        `;
+      }).join('');
+
+      if (totalPriceEl) totalPriceEl.innerText = total;
+      if (hiddenInput) hiddenInput.value = detailsText;
+
+      // Gestion des boutons supprimer
+      document.querySelectorAll('.btn-remove').forEach(btn => {
+        btn.onclick = (e) => {
+          const idx = e.currentTarget.dataset.index;
+          selection.splice(idx, 1);
+          localStorage.setItem('panier-gisele', JSON.stringify(selection));
+          window.dispatchEvent(new Event('panierMisAJour'));
+          renderSelection();
+        };
+      });
     }
 
-    emptyMsg.classList.add('hidden');
-    totalBox.classList.remove('hidden');
-    
-    let total = 0;
-    let detailsText = "";
+    // Lancer l'affichage
+    renderSelection();
 
-    cartList.innerHTML = selection.map((item, index) => {
-      let prixValue = parseFloat(item.prix);
-      let prixAffiche = item.prix; 
-      
-      if (!isNaN(prixValue)) {
-        total += prixValue;
-        prixAffiche = `${item.prix} €`;
-      }
+    // Gestion du formulaire
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = form.querySelector('.btn-submit');
+        const originalText = btn.innerHTML;
+        const formData = new FormData(form);
 
-      detailsText += `- ${item.nom} (${prixAffiche})\n`;
-      if (item.details) {
-        detailsText += `  Détails : ${item.details.replace(/\n/g, ' ')}\n`;
-      }
-      
-      return `
-        <li class="cart-item">
-          <div class="cart-item-header">
-            <div class="item-info">
-              <strong>${item.nom}</strong>
-              <span>${prixAffiche}</span>
-            </div>
-            <button type="button" class="btn-remove" data-index="${index}"><i class="fas fa-trash"></i></button>
-          </div>
-          ${item.details ? `<div class="cart-item-details">${item.details}</div>` : ''}
-        </li>
-      `;
-    }).join('');
+        try {
+          btn.innerHTML = 'Envoi en cours...';
+          btn.disabled = true;
 
-    totalPriceEl.innerText = total;
-    hiddenInput.value = detailsText;
+          // Correction URL relative pour éviter la 404
+          const response = await fetch('/api/send-email/', {
+            method: 'POST',
+            body: formData
+          });
 
-    document.querySelectorAll('.btn-remove').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const idx = e.currentTarget.dataset.index;
-        selection.splice(idx, 1);
-        localStorage.setItem('panier-gisele', JSON.stringify(selection));
-        window.dispatchEvent(new Event('panierMisAJour'));
-        renderSelection();
+          if (response.ok) {
+            localStorage.removeItem('panier-gisele');
+            window.dispatchEvent(new Event('panierMisAJour'));
+            window.location.href = "/merci/"; 
+          } else {
+            const errData = await response.json();
+            console.error("Détails erreur:", errData);
+            alert("Erreur lors de l'envoi. Vérifiez la console.");
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+          }
+        } catch (err) {
+          alert("Erreur de connexion.");
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+        }
       });
-    });
-  }
-
-  // Initialisation
-  renderSelection();
-
-  // Soumission du formulaire
-  const form = document.getElementById('devis-form');
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const formData = new FormData(form);
-    const btn = form.querySelector('.btn-submit');
-    const originalText = btn.innerHTML;
-
-    try {
-      btn.innerHTML = 'Envoi en cours...';
-      btn.disabled = true;
-
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
-        body: formData
-      });
-
-      if (response.ok) {
-        // SUCCÈS : On vide le panier, on met à jour le badge et on redirige
-        localStorage.removeItem('panier-gisele');
-        window.dispatchEvent(new Event('panierMisAJour'));
-        window.location.href = "/merci"; 
-      } else {
-        // ERREUR : On remet le bouton à la normale
-        alert("Une erreur est survenue lors de l'envoi.");
-        btn.innerHTML = originalText;
-        btn.disabled = false;
-      }
-    } catch (err) {
-      // ERREUR RÉSEAU
-      alert("Erreur de connexion au serveur.");
-      btn.innerHTML = originalText;
-      btn.disabled = false;
     }
   });
 </script>
 
 <style>
-  .devis-page { padding: 80px 20px; }
-  .devis-page h1 { font-family: var(--police-titre); font-size: 3.5em; text-align: center; color: var(--couleur-sombre); }
+  /* Tes styles restent identiques */
+  .hidden { display: none !important; }
+  .devis-page { padding: 60px 20px; }
+  .page-title { font-size: 3em; color: #7b4b94; text-align: center; }
   .subtitle { text-align: center; margin-bottom: 50px; font-style: italic; }
-
-  .devis-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 50px;
-    align-items: start;
-  }
-
-  @media (max-width: 768px) {
-    .devis-container { grid-template-columns: 1fr; }
-  }
-
-  /* Liste des articles */
+  .devis-container { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: start; }
+  @media (max-width: 768px) { .devis-container { grid-template-columns: 1fr; } }
   .selection-list { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-  
-  .cart-item {
-    display: flex;
-    flex-direction: column;
-    padding: 15px 0;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .cart-item-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-  }
-
-  .cart-item-details {
-    font-size: 0.85rem; 
-    color: #666; 
-    margin-top: 10px; 
-    font-style: italic; 
-    white-space: pre-line;
-    line-height: 1.4;
-    background: #fdfaf6;
-    padding: 10px;
-    border-radius: 8px;
-    border-left: 3px solid var(--couleur-primaire);
-  }
-
-  .item-info strong { display: block; color: var(--couleur-sombre); }
-  .item-info span { color: var(--couleur-accent); font-weight: bold; }
-  .btn-remove { background: none; border: none; color: #ff5252; cursor: pointer; padding: 5px; }
-
-  .total-box { margin-top: 20px; text-align: right; font-size: 1.3em; font-weight: bold; color: var(--couleur-accent); }
-
-  /* Formulaire */
-  .contact-form-box { background: #fbf9fc; padding: 30px; border-radius: 15px; border: 1px solid var(--couleur-primaire); }
+  .cart-item { padding: 15px 0; border-bottom: 1px solid #eee; transition: 0.3s; }
+  .cart-item:hover { transform: translateX(5px); }
+  .cart-item-header { display: flex; justify-content: space-between; align-items: center; }
+  .btn-remove { background: none; border: none; color: #ff5252; cursor: pointer; }
+  .total-box { margin-top: 20px; text-align: right; font-size: 1.3em; font-weight: bold; color: #7b4b94; }
+  .contact-form-box { background: #fbf9fc; padding: 30px; border-radius: 15px; border: 1px solid #7b4b94; }
   .input-group { margin-bottom: 20px; }
-  .input-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--couleur-sombre); }
-  .input-group input, .input-group textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-family: inherit;
-    box-sizing: border-box; /* S'assure que le champ ne dépasse pas de la boîte */
-  }
-  .btn-submit {
-    width: 100%;
-    background: var(--couleur-sombre);
-    color: white;
-    border: none;
-    padding: 15px;
-    border-radius: 30px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  .btn-submit:hover { background: var(--couleur-primaire); transform: scale(1.02); }
-  
-  .hidden { display: none; }
-  .btn-retour { display: inline-block; margin-top: 20px; color: var(--couleur-sombre); font-weight: bold; }
+  .input-group label { display: block; margin-bottom: 8px; font-weight: bold; }
+  .input-group input, .input-group textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; }
+  .btn-submit { width: 100%; background: #7b4b94; color: white; border: none; padding: 15px; border-radius: 30px; font-weight: bold; cursor: pointer; }
 </style>

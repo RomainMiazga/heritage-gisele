@@ -1,0 +1,159 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+
+const title = "Notre Histoire - L'Héritage de Gisèle";
+const description = "Découvrez l'origine et les valeurs de l'Héritage de Gisèle.";
+---
+
+<MainLayout title={title} description={description}>
+	<main class="page-histoire">
+		<div class="header-histoire reveal">
+			<h1 class="page-title">Notre Histoire</h1>
+			<p class="page-subtitle">Un petit peu d'histoire..</p>
+		</div>
+
+		<div class="histoire-card reveal delay-1">
+			<div class="histoire-image-container">
+				<img src="/images/image0.webp" alt="Illustration de Gisèle et sa petite-fille">
+			</div>
+
+			<div class="histoire-texte">
+				<h2 class="histoire-titre">Une passion transmise</h2>
+				<p>
+					L'Histoire de Gisèle, 
+					la transmission du savoir-faire, et l'amour mis dans chaque création.
+				</p>
+				<p>
+					Chaque chapelet est un pont entre le passé et le présent, 
+					une pièce unique conçue pour durer et accompagner les moments de foi.
+				</p>
+			</div>
+
+			<p class="signature">L'Héritage de Gisèle</p>
+		</div>
+	</main>
+</MainLayout>
+
+<style>
+	/* Tes styles restent identiques, j'ai juste supprimé les doublons de structure */
+	.page-histoire {
+		background: #fbf9fc;
+		padding: 60px 20px;
+		min-height: 70vh;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.header-histoire {
+		text-align: center;
+		margin-bottom: 40px;
+		padding: 0 15px;
+	}
+
+	.header-histoire .page-title {
+		color: #7b4b94; 
+		font-size: 3em;
+		margin: 0 0 10px 0;
+		/* font-family: 'Great Vibes', cursive; */
+		transition: transform 0.3s ease-in-out;
+	}
+
+	.header-histoire:hover .page-title {
+		transform: scale(1.05);
+	}
+
+	.header-histoire .page-subtitle {
+		color: #4a3b52;
+		font-size: 1.5em;
+		font-style: italic;
+		margin: 0;
+		transition: transform 0.3s ease-in-out;
+	}
+
+	.header-histoire:hover .page-subtitle {
+		transform: translateY(5px);
+	}
+
+	.histoire-card {
+		background: rgba(255, 255, 255, 0.9);
+		max-width: 800px;
+		padding: 50px 60px;
+		border-radius: 15px;
+		box-shadow: 0 10px 30px rgba(123, 75, 148, 0.1);
+		border: 1px solid #eaddf2;
+		text-align: center;
+		transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+	}
+
+	.histoire-card:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 15px 40px rgba(123, 75, 148, 0.2);
+	}
+
+	.histoire-titre {
+		color: #7b4b94;
+		font-size: 2.5em;
+		font-style: italic;
+		margin-bottom: 40px;
+		position: relative;
+		transition: transform 0.3s ease-in-out;
+	}
+
+	.histoire-card:hover .histoire-titre {
+		transform: scale(1.02);
+	}
+
+	.histoire-titre::after {
+		content: '';
+		display: block;
+		width: 100px;
+		height: 2px;
+		background: #d4badc;
+		margin: 20px auto 0;
+	}
+
+	.histoire-texte p {
+		font-size: 1.15em;
+		line-height: 1.8;
+		color: #4a3b52;
+		margin-bottom: 25px;
+		transition: transform 0.3s ease-in-out;
+	}
+
+	.histoire-card:hover .histoire-texte p {
+		transform: translateY(3px);
+	}
+
+	.histoire-image-container img {
+		max-width: 100%;
+		height: auto;
+		border-radius: 10px;
+		box-shadow: 0 8px 20px rgba(123, 75, 148, 0.15);
+		transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+	}
+
+	.histoire-image-container:hover img {
+		transform: scale(1.05);
+		box-shadow: 0 12px 30px rgba(123, 75, 148, 0.25);
+	}
+
+	.signature {
+		font-size: 1.4em;
+		color: #7b4b94;
+		font-style: italic;
+		margin-top: 40px;
+		font-weight: bold;
+		transition: transform 0.3s ease-in-out;
+	}
+
+	.histoire-card:hover .signature {
+		transform: scale(1.03);
+	}
+
+	@media (max-width: 768px) {
+		.header-histoire .page-title { font-size: 2.8em; }
+		.histoire-card { padding: 30px 20px; }
+	}
+</style>

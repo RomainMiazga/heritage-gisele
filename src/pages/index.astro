@@ -7,15 +7,15 @@ const description = "Découvrez l'univers de l'Héritage de Gisèle : création 
 
 <MainLayout title={title} description={description}>
   
-  <section class="hero">
+  <section class="hero reveal">
     <div class="hero-content">
       <h1>L'Héritage de Gisèle</h1>
       <p>Créations artisanales de chapelets uniques</p>
-      <a href="/catalogue" class="btn-hero-collection">Explorer la collection</a>
+      <a href="/catalogue/" class="btn-hero-collection">Explorer la collection</a>
     </div>
   </section>
 
-  <section class="arguments container">
+  <section class="arguments container reveal">
     <div class="arg">
       <i class="fas fa-hand-sparkles"></i>
       <h3>Fait Main</h3>
@@ -33,104 +33,468 @@ const description = "Découvrez l'univers de l'Héritage de Gisèle : création 
     </div>
   </section>
 
-  <section class="personnalisation-cta">
+  <section class="home-section container reveal">
+    <div class="section-grid">
+      <div class="section-image">
+        <img src="/images/illustration-gisele.png" class="img-interactive" alt="L'Histoire de l'Héritage de Gisèle" />
+      </div>
+      <div class="section-text">
+        <span class="subtitle-gold">Une tradition vivante</span>
+        <h2>Notre Histoire</h2>
+        <p>
+          L'Héritage de Gisèle est né de l'envie de redonner ses lettres de noblesse au chapelet artisanal. 
+          Inspirée par la transmission et le sens sacré, chaque création raconte une histoire de foi et de patience.
+        </p>
+        <a href="/histoire/" class="btn-outline">Découvrir notre Histoire</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section bg-light reveal">
+    <div class="container section-grid reverse">
+      <div class="section-image">
+        <img src="/images/bois_olive.webp" class="img-interactive" alt="Gros plan sur un chapelet en pierres naturelles" />
+      </div>
+      <div class="section-text">
+        <span class="subtitle-gold">Éclat & Spiritualité</span>
+        <h2>Nos Créations</h2>
+        <p>
+          Pierres naturelles, bois précieux et fils de soie se rencontrent pour former des objets de prière robustes et élégants. 
+          Parcourez nos dizainiers et chapelets classiques.
+        </p>
+        <a href="/catalogue/" class="btn-outline">Voir le catalogue</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="personnalisation-cta reveal">
     <div class="container">
       <div class="custom-box">
         <i class="fas fa-gem gold-icon"></i>
         <h2>Une Création à votre Image</h2>
         <p>
-          Que ce soit pour un baptême, une communion, un mariage ou pour votre prière quotidienne, 
-          je vous accompagne dans la création d'un chapelet unique. 
-          Choisissez vos pierres, la couleur du fil et les médailles qui font sens pour vous.
+          Choisissez vos pierres, la couleur du fil et les médailles qui font sens pour vous. 
+          Je vous accompagne pour créer le compagnon de prière parfait.
         </p>
-        <a href="/personnalisation" class="btn-hero-collection">Demander un devis personnalisé</a>
+        <a href="/personnalisation/" class="btn-hero-collection">Demander un devis personnalisé</a>
       </div>
     </div>
   </section>
 
-  <section class="instagram-feed container">
-    <h3>Suivez l'Atelier</h3>
-    <p>Découvrez les coulisses des créations et les nouvelles pierres arrivées à l'atelier.</p>
-    <div class="insta-grid">
-        <img src="/images/atelier1.jpg" alt="Détail perles" />
-        <img src="/images/atelier2.jpg" alt="Travail en cours" />
-        <img src="/images/atelier3.jpg" alt="Chapelet terminé" />
+<section class="instagram-section reveal">
+  <div class="container">
+    <div class="insta-header">
+      <span class="subtitle-gold">Immersion</span>
+      <h3>Suivez l'Atelier</h3>
+      <p>Découvrez les coulisses des créations et les nouvelles pierres arrivées à l'atelier.</p>
     </div>
-    <a href="https://instagram.com/ton_compte" target="_blank" class="btn-insta">
-        <i class="fab fa-instagram"></i> @lheritage_de_gisele
-    </a>
-  </section>
+
+    <div class="insta-grid">
+      <div class="insta-item">
+        <img src="/images/atelier1.jpg" alt="Détail perles" />
+        <div class="insta-overlay"><i class="fab fa-instagram"></i></div>
+      </div>
+      <div class="insta-item">
+        <img src="/images/atelier2.jpg" alt="Travail en cours" />
+        <div class="insta-overlay"><i class="fab fa-instagram"></i></div>
+      </div>
+      <div class="insta-item">
+        <img src="/images/atelier3.jpg" alt="Chapelet terminé" />
+        <div class="insta-overlay"><i class="fab fa-instagram"></i></div>
+      </div>
+    </div>
+
+    <div class="insta-footer">
+      <a href="https://instagram.com/lheritagedegisele" target="_blank" class="btn-insta-premium">
+        <i class="fab fa-instagram"></i> Rejoindre la communauté @lheritagedegisele
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="home-section container reveal">
+  <div class="contact-card-wrapper">
+    <div class="section-text text-center">
+      <span class="subtitle-gold">À votre écoute</span>
+      <h2>Contactez-moi</h2>
+      <p>
+        Une question sur une pierre, un délai ou une personnalisation particulière ? <br> 
+        Je vous réponds avec joie sous 24 à 48h.
+      </p>
+      <a href="/contact/" class="btn-outline">Envoyer un message</a>
+    </div>
+  </div>
+</section>
 
 </MainLayout>
 
 <style>
-  /* Styles spécifiques à l'accueil */
+  /* --- STYLES EXISTANTS ET NOUVEAUX --- */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+/* Hero */
   .hero {
     position: relative;
-    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/images/hero-bg.png') center/cover no-repeat;
     height: 75vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     color: white;
-  }
-  .hero h1 {
-    font-family: var(--police-titre); 
-    font-size: clamp(3.5em, 10vw, 5.5em);
-    margin-bottom: 0.2em;
-    text-shadow: 2px 2px 15px rgba(0,0,0,0.6);
-  }
-  .hero p {
-    font-size: 1.5em;
-    font-style: italic;
-    margin-bottom: 2em;
+    overflow: hidden; 
   }
 
-  .arguments {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 40px;
-    padding: 80px 20px;
-    text-align: center;
+  /* L'image de fond avec l'animation */
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/images/hero-bg.webp') center/cover no-repeat;
+    z-index: 0;
+    transition: transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
+
+  .hero:hover::before {
+    transform: scale(1.1);
+  }
+
+  /* Le contenu (Texte) */
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    transition: transform 0.8s ease;
+  }
+
+  /* ON REFIXE LA POLICE ICI */
+  .hero h1 { 
+    font-family: 'Great Vibes', cursive; /* Ta police précieuse */
+    font-size: clamp(3.5em, 10vw, 5.5em); 
+    margin-bottom: 0.2em; 
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.3); /* Un petit plus pour la lisibilité */
+  }
+
+  .hero p { 
+    font-size: 1.5em; 
+    font-style: italic; 
+    margin-bottom: 2em; 
+  }
+
+  .hero:hover .hero-content {
+    transform: translateY(-10px);
+  }
+
+/* arguments */
+  .arguments { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 40px; 
+    padding: 80px 20px; 
+    text-align: center; 
+  }
+  
+  /* --- AJOUTS ICI POUR L'ANIMATION DE BASE --- */
+  .arg {
+    /* Transition pour un mouvement fluide (0.4s est une bonne vitesse ici) */
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+    
+    /* Optionnel : Ajoute un petit padding et une bordure très légère pour délimiter le bloc */
+    padding: 30px;
+    border-radius: 15px;
+    background: transparent; /* Pour l'état normal */
+    
+    /* Optionnel : Un curseur par défaut ou pointer selon si c'est cliquable */
+    cursor: default; 
+  }
+
+  /* --- AJOUTS ICI POUR L'EFFET AU SURVOL (HOVER) --- */
+  .arg:hover {
+    /* L'ACTION : Grossit légèrement (5%) et monte un tout petit peu */
+    transform: scale(1.05) translateY(-5px);
+    
+    /* OPTIONNEL MAIS RECOMMANDÉ : Ajoute une ombre douce pour la profondeur */
+    background: white; /* Pour faire ressortir le bloc */
+    box-shadow: 0 10px 30px rgba(123, 75, 148, 0.1); /* Ombre lilas très légère */
+  }
+
+  /* Les styles existants restent inchangés */
   .arg i { font-size: 2.5em; color: var(--couleur-primaire); margin-bottom: 20px; }
   .arg h3 { font-family: var(--police-titre); font-size: 2em; color: var(--couleur-sombre); }
 
-  .personnalisation-cta { background-color: #fbf9fc; padding: 60px 0; }
-  .custom-box {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 60px 40px;
-    border: 1px solid var(--couleur-primaire);
-    border-radius: 20px;
-    background: white;
-    text-align: center;
-  }
-  .gold-icon { font-size: 3em; color: var(--couleur-accent); margin-bottom: 20px; }
-
-  .instagram-feed { text-align: center; padding: 80px 20px; }
-  .instagram-feed h3 { font-family: var(--police-titre); font-size: 2.5em; }
-  .insta-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    max-width: 600px;
-    margin: 30px auto;
-  }
-  .insta-grid img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+  /* Structure des nouvelles sections */
+  .home-section { padding: 100px 0; }
+  .bg-light { background-color: #fbf9fc; width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; }
   
-  .btn-insta { 
-    display: inline-block; 
-    padding: 12px 25px; 
-    background: var(--couleur-sombre); 
-    color: white !important; 
-    border-radius: 30px; 
-    text-decoration: none; 
-    margin-top: 20px;
+  .section-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .section-grid.reverse { direction: rtl; } /* Inverse l'image et le texte */
+  .section-grid.reverse .section-text { direction: ltr; } /* Remet le texte à l'endroit */
+
+  .section-image img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+
+  .subtitle-gold {
+    color: var(--couleur-accent, #D4AF37);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+    font-size: 0.9em;
+  }
+
+  .section-text h2 {
+    font-family: var(--police-titre);
+    font-size: 3em;
+    color: var(--couleur-sombre);
+    margin: 10px 0 20px 0;
+  }
+
+  .section-text p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 30px;
+  }
+
+  .text-center { text-align: center; max-width: 700px; margin: 0 auto; }
+
+  /* Boutons */
+  .btn-outline {
+    display: inline-block;
+    padding: 12px 30px;
+    border: 2px solid var(--couleur-sombre);
+    color: var(--couleur-sombre);
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 30px;
     transition: 0.3s;
   }
-  .btn-insta:hover { opacity: 0.9; transform: scale(1.05); }
+  .btn-outline:hover {
+    background: var(--couleur-sombre);
+    color: white;
+  }
 
-  .container { max-width: 1200px; margin: 0 auto; }
+  /* Personnalisation CTA */
+  .personnalisation-cta { padding: 60px 0; }
+  .custom-box {
+    max-width: 900px; margin: 0 auto; padding: 60px 40px;
+    border: 1px solid var(--couleur-primaire); border-radius: 20px;
+    background: white; text-align: center;
+  }
+  .gold-icon { font-size: 3em; color: #D4AF37; margin-bottom: 20px; }
+
+  /* Instagram */
+  .instagram-feed { text-align: center; padding: 80px 20px; }
+  .insta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; max-width: 600px; margin: 30px auto; }
+  .insta-grid img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 8px; }
+
+  .btn-insta { 
+    display: inline-block; padding: 12px 25px; background: #7b4b94; color: white !important; 
+    border-radius: 30px; text-decoration: none; margin-top: 20px;
+  }
+
+/* Le cadre autour de la section contact */
+.contact-card-wrapper {
+  max-width: 850px;       /* Un peu moins large que le reste pour l'effet "carte" */
+  margin: 0 auto;
+  padding: 60px 40px;
+  background-color: #fff; /* Fond blanc */
+  border: 1px solid #e8e2ee; /* Bordure lilas très clair */
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(123, 75, 148, 0.05); /* Ombre très légère */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Optionnel : Un petit détail doré dans les coins pour rappeler l'artisanat */
+.contact-card-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #D4AF37, transparent); /* Ligne dorée en haut */
+}
+
+/* On s'assure que le texte à l'intérieur est bien espacé */
+.contact-card-wrapper h2 {
+  margin-top: 10px;
+  font-size: 2.8em;
+}
+
+.contact-card-wrapper p {
+  margin-bottom: 35px;
+  max-width: 550px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* --- SECTION INSTAGRAM REVISITÉE --- */
+.instagram-section {
+  padding: 100px 0;
+  background-color: #fdfaf6; /* Un crème très léger pour réchauffer */
+}
+
+.insta-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.insta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px; /* Plus d'espace pour laisser respirer */
+  margin-bottom: 40px;
+}
+
+.insta-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  aspect-ratio: 1 / 1;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.insta-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+/* Effet au survol de l'image */
+.insta-item:hover {
+  transform: translateY(-8px); /* L'image s'élève */
+  box-shadow: 0 15px 30px rgba(123, 75, 148, 0.15);
+}
+
+.insta-item:hover img {
+  transform: scale(1.1); /* Zoom subtil */
+}
+
+/* Voile violet transparent au survol */
+.insta-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(123, 75, 148, 0.4); /* Violet transparent */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.insta-overlay i {
+  color: white;
+  font-size: 2rem;
+}
+
+.insta-item:hover .insta-overlay {
+  opacity: 1;
+}
+
+/* Bouton Instagram Premium */
+.insta-footer {
+  text-align: center;
+}
+
+.btn-insta-premium {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 35px;
+  background: white;
+  color: #7b4b94 !important;
+  border: 2px solid #7b4b94;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.btn-insta-premium:hover {
+  background: #7b4b94;
+  color: white !important;
+  box-shadow: 0 5px 15px rgba(123, 75, 148, 0.3);
+}
+
+/* 1. L'état de repos (Normal) */
+.img-interactive {
+  transition: all 0.5s ease-in-out; /* La durée du mouvement (0.5 seconde) */
+  cursor: pointer;
+  filter: grayscale(20%); /* Un petit effet de style initial */
+}
+
+/* 2. L'état au survol (Hover) */
+.img-interactive:hover {
+  /* On combine les mouvements ici */
+  transform: scale(1.03) translateY(-15px) rotate(1deg); 
+  cursor: default;
+  /* On change l'ombre pour simuler la hauteur */
+  box-shadow: 0 20px 40px rgba(123, 75, 148, 0.3);
+  
+  /* On remet les couleurs à 100% */
+  filter: grayscale(0%);
+}
+
+  @media (max-width: 768px) {
+    .section-grid { grid-template-columns: 1fr; gap: 30px; }
+    .section-grid.reverse { direction: ltr; }
+    .section-image img { height: 300px; }
+    .hero h1 { font-size: 3em; }
+  
+  
+  .contact-card-wrapper {
+    padding: 40px 20px;
+    margin: 0 10px; /* Un peu d'air sur les côtés sur mobile */
+  }
+
+ 
+  .instagram-section {
+    padding: 60px 0;
+  }
+  
+.insta-grid {
+    /* OPTION A : 2 images par ligne au lieu d'une seule grosse */
+    grid-template-columns: repeat(2, 1fr); 
+    
+    /* OPTION B : On réduit l'espace entre les images */
+    gap: 12px; 
+    
+    /* On limite la largeur de la grille entière pour qu'elle ne touche pas les bords */
+    max-width: 90% !important;
+    margin: 0 auto 30px auto;
+  }
+
+  .insta-item {
+    /* On peut aussi réduire l'arrondi pour que ça fasse plus propre en petit */
+    border-radius: 8px;
+  }
+
+  /* Si tu veux que les images soient encore plus petites et centrées sur une seule colonne */
+  /*
+  .insta-grid {
+    grid-template-columns: 1fr;
+    padding: 0 40px;  <-- Augmenter le padding réduit la taille de l'image centrale
+  
+}
+  
+}
 </style>

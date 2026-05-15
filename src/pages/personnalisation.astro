@@ -4,12 +4,12 @@ import Layout from '../layouts/MainLayout.astro';
 
 <Layout title="Vos Personnalisations - L'Héritage de Gisèle">
   <main>
-    <section class="page-header">
+    <section class="page-header reveal">
         <h1 class="page-title" style="color: #7b4b94; margin-top: 0;">Créations Sur-Mesure</h1>
         <p class="page-subtitle">Composons ensemble le chapelet qui vous accompagnera.</p>
     </section>
 
-    <div class="form-container">
+    <div class="form-container reveal">
         <form id="perso-form">
             
             <div class="form-group">
@@ -104,7 +104,7 @@ import Layout from '../layouts/MainLayout.astro';
 
             <div class="form-group">
                 <label for="message" class="titre-champ"><i class="fas fa-pen-fancy"></i> Parlez-moi de votre projet</label>
-                <textarea id="message" name="message" class="form-control" rows="4" required placeholder="Détails, taille souhaitée, prénom à ajouter..."></textarea>
+                <textarea id="message" name="message" class="form-control" rows="4" required placeholder="Détails, taille souhaitée..."></textarea>
             </div>
 
             <button type="submit" class="btn-submit">
@@ -142,51 +142,45 @@ import Layout from '../layouts/MainLayout.astro';
     @media (max-width: 768px) { .form-container { padding: 20px; margin: 30px 15px; } .checkbox-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; } }
 </style>
 
-<script>
+<script is:inline>
+  document.addEventListener('astro:page-load', () => {
     const form = document.getElementById('perso-form');
+    if (!form) return;
     
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        
         const formData = new FormData(form);
         
-        // 1. On récupère les choix
-        const perlesAve = formData.get('perles_ave') || 'Non précisé';
-        const perlesPater = formData.get('perles_pater') || 'Non précisé';
-        const perlesLiaison = formData.get('perles_liaison') || 'Non précisé';
-        const styleCroix = formData.get('style_croix') || 'Non précisé';
-        const styleMedaillon = formData.get('style_medaillon') || 'Non précisé';
-        const message = formData.get('message') || '';
+        // 1. Récupération ultra-sécurisée du panier
+        let panier = [];
+        try {
+            const stored = localStorage.getItem('panier-gisele');
+            panier = stored ? JSON.parse(stored) : [];
+            if (!Array.isArray(panier)) panier = []; 
+        } catch (err) {
+            panier = [];
+        }
 
-        // 2. On crée un résumé de la personnalisation
-        const detailsPerso = `Ave: ${perlesAve} | Pater: ${perlesPater} | Liaison: ${perlesLiaison} | Croix: ${styleCroix} | Médaillon: ${styleMedaillon}\nNote client : ${message}`;
-
-        // 3. On crée l'objet Produit Sur-Mesure
+        // 2. Création de l'objet produit
         const produitSurMesure = {
-            id: 'perso-' + Date.now(), // Un ID unique basé sur l'heure exacte
+            id: "perso-" + Date.now(), // Préfixe pour bien les distinguer
             nom: 'Chapelet Sur-Mesure',
-            prix: 'Sur devis', // Le prix n'est pas défini à l'avance
-            image: '/images/placeholder.jpg', // L'image par défaut dans le panier
-            details: detailsPerso, // Le descriptif qu'on a construit
-            quantite: 1
+            prix: '0', // Important pour ton calcul de total
+            details: `Ave: ${formData.get('perles_ave')} | Pater: ${formData.get('perles_pater')} | Liaison: ${formData.get('perles_liaison')} | Croix: ${formData.get('style_croix')} | Méd.: ${formData.get('style_medaillon')}\nNote: ${formData.get('message')}`
         };
 
-        // 4. On récupère le panier existant dans le navigateur (ou on en crée un vide)
-        let panier = JSON.parse(localStorage.getItem('panier-gisele')) || [];
-
-        // 5. On ajoute la création au panier
+        // 3. Mise à jour de la donnée
         panier.push(produitSurMesure);
-
-        // 6. On sauvegarde le tout
         localStorage.setItem('panier-gisele', JSON.stringify(panier));
 
-        // 7. On envoie le signal à la navbar (le badge se met à jour)
+        // 4. Signal pour la Navbar
         window.dispatchEvent(new Event('panierMisAJour'));
 
-        // 8. On prévient le client
-        alert("Votre création a bien été ajoutée au panier !");
-        
-        // 9. On le redirige vers le récapitulatif
-        window.location.href = "/devis"; 
+        // 5. Redirection "propre"
+        // On attend 100ms pour être sûr que le dispatchEvent est fini
+        setTimeout(() => {
+            window.location.href = "/devis/";
+        }, 100);
     });
+  });
 </script>

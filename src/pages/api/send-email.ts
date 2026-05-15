@@ -18,7 +18,7 @@ export const POST: APIRoute = async ({ request }) => {
       headers: {
         'Content-Type': 'application/json',
         // IMPORTANT : Bien ajouter "Bearer " avant la clé
-        'Authorization': `Bearer re_eyUsQLyD_Dgt35jo8TvxV98R4jcJ39ejN`
+        'Authorization': `Bearer ${import.meta.env.RESEND_API_KEY}`
       },
       body: JSON.stringify({
         from: "L'Héritage de Gisèle <onboarding@resend.dev>",

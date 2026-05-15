@@ -1,32 +1,184 @@
 ---
 const { site_name = "L'Héritage de Gisèle" } = Astro.props;
-const isNotHome = Astro.url.pathname !== "/";
+const currentYear = new Date().getFullYear();
 
-// Simulation de tes "Coups de cœur" (Plus tard, on piochera dans tes fichiers Markdown/JSON)
-const coupsDeCoeur = [
-  { nom: "Rosaire Perles d'Eau", prix: "45,00", image_url: "chapelet1.jpg", id: 101 },
-  { nom: "Dizainier Bois", prix: "15,00", image_url: "chapelet2.jpg", id: 102 },
-];
+// On peut imaginer que tu as d'autres liens ou infos ici
 ---
 
-
-
 <footer class="main-footer">
-    <div class="footer-content">
-        <p class="citation-footer">"De génération en génération, de cœur à cœur."</p>
+    <div class="footer-container">
+        <div class="footer-section identity">
+            <h3 class="footer-logo">{site_name}</h3>
+            <p class="citation-footer">"De génération en génération, de cœur à cœur."</p>
+            <div class="footer-socials">
+                <a href="https://instagram.com/lheritagedegisele" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="/contact" aria-label="Contact"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-section links">
+            <h4>Menu</h4>
+            <ul>
+                <li><a href="/">Accueil</a></li>
+                <li><a href="/catalogue">Boutique</a></li>
+                <li><a href="/histoire">Notre Histoire</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section info">
+            <h4>Informations</h4>
+            <ul>
+                <li><i class="fas fa-truck"></i> Livraison possible</li>
+                <li><i class="fas fa-heart"></i> Fait main en France</li>
+                <li><i class="fas fa-lock"></i> Paiement sécurisé</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
         <p class="copyright">
-            &copy; {new Date().getFullYear()} {site_name}. Tous droits réservés.
+            &copy; {currentYear} {site_name}. Tous droits réservés.
         </p>
-        <div class="footer-links">
-            <a href="/mentions-legales">Mentions légales</a> | 
-            <a href="/cgv">CGV</a> | 
-            <a href="/contact">Contact</a>
+        <div class="legal-links">
+            <a href="/mentions-legales/">Mentions légales</a>
+            <span class="separator">|</span>
+            <a href="/cgv/">CGV</a>
         </div>
     </div>
 </footer>
 
 <style>
-    .pre-footer { margin-top: 60px; border-top: 1px solid #eee; padding-top: 40px; text-align: center; }
-    .pre-footer h3 { font-family: 'Great Vibes', cursive; font-size: 2.5em; color: #4a3b52; }
-    /* ... tes autres styles de footer ... */
+    .main-footer {
+        background: #ffffff;
+        padding: 60px 20px 30px;
+        border-top: 1px solid #eaddf2; /* Une ligne très légère couleur lavande */
+        color: #4a3b52;
+        margin-top: 80px;
+    }
+
+    .footer-container {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr;
+        gap: 40px;
+        padding-bottom: 40px;
+    }
+
+    /* Style du Logo et Citation */
+    .footer-logo {
+        font-family: 'Great Vibes', cursive;
+        font-size: 2.2rem;
+        color: #7b4b94;
+        margin-bottom: 10px;
+    }
+
+    .citation-footer {
+        font-family: 'Lora', serif;
+        font-style: italic;
+        font-size: 1.1rem;
+        opacity: 0.8;
+        line-height: 1.4;
+    }
+
+    /* Titres des colonnes */
+    .footer-section h4 {
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 20px;
+        color: #4a3b52;
+        font-weight: 600;
+    }
+
+    /* Listes */
+    .footer-section ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-section ul li {
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .footer-section ul li a {
+        text-decoration: none;
+        color: #4a3b52;
+        transition: color 0.3s ease;
+    }
+
+    .footer-section ul li a:hover {
+        color: #d4af37; /* Ton Or antique au survol */
+    }
+
+    /* Icônes de réassurance */
+    .footer-section i {
+        color: #d4af37;
+        font-size: 0.9rem;
+    }
+
+    /* Réseaux sociaux */
+    .footer-socials {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .footer-socials a {
+        color: #7b4b94;
+        font-size: 1.3rem;
+        transition: transform 0.3s ease;
+    }
+
+    .footer-socials a:hover {
+        transform: translateY(-3px);
+    }
+
+    /* Barre du bas */
+    .footer-bottom {
+        border-top: 1px solid #f3eff7;
+        padding-top: 30px;
+        text-align: center;
+        font-size: 0.9rem;
+    }
+
+    .legal-links {
+        margin-top: 10px;
+    }
+
+    .legal-links a {
+        text-decoration: none;
+        color: #4a3b52;
+        opacity: 0.7;
+    }
+
+    .separator {
+        margin: 0 10px;
+        opacity: 0.3;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .footer-container {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+
+        .footer-section ul li {
+            justify-content: center;
+        }
+
+        .footer-socials {
+            justify-content: center;
+        }
+
+        .main-footer {
+            padding-bottom: 100px; /* Espace pour la barre mobile du bas */
+        }
+    }
 </style>

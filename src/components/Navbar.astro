@@ -19,15 +19,15 @@ const currentPath = Astro.url.pathname;
 
         <ul class="nav-links" id="nav-links">
             <li><a href="/" class={currentPath === '/' ? 'active' : ''}>Boutique</a></li>
-            <li><a href="/heritage" class={currentPath.includes('/heritage') ? 'active' : ''}>Notre Histoire</a></li>
-            <li><a href="/catalogue" class={currentPath.includes('/catalogue') ? 'active' : ''}>Nos Créations</a></li>
-            <li><a href="/personnalisation" class={currentPath.includes('/personnalisation') ? 'active' : ''}>Vos Personnalisations</a></li>
-            <li><a href="/contact" class={currentPath.includes('/contact') ? 'active' : ''}>Contact</a></li>
+            <li><a href="/histoire/" class={currentPath.includes('/histoire/') ? 'active' : ''}>Notre Histoire</a></li>
+            <li><a href="/catalogue/" class={currentPath.includes('/catalogue/') ? 'active' : ''}>Nos Créations</a></li>
+            <li><a href="/personnalisation/" class={currentPath.includes('/personnalisation/') ? 'active' : ''}>Vos Personnalisations</a></li>
+            <li><a href="/contact/" class={currentPath.includes('/contact/') ? 'active' : ''}>Contact</a></li>
             <li>
-                <a href="/devis" class={`nav-item-cart ${currentPath.includes('/devis') ? 'active' : ''}`}>
+                <a href="/devis/" class={`nav-item-cart ${currentPath.includes('/devis/') ? 'active' : ''}`}>
                     <span style="position: relative;">
                         <i class="fas fa-shopping-basket"></i>
-                        <span class="js-badge-update">0</span>
+                        <span class="js-badge-update" transition:persist>0</span>
                     </span>
                     <span>Panier</span>
                 </a>
@@ -38,57 +38,53 @@ const currentPath = Astro.url.pathname;
 
 <nav class="navbar-bottom-mobile">
     <a href="/" class={`nav-item ${currentPath === '/' ? 'active' : ''}`}><i class="fas fa-store"></i></a>
-    <a href="/heritage" class={`nav-item ${currentPath.includes('/heritage') ? 'active' : ''}`}><i class="fas fa-book-open"></i></a>
-    <a href="/catalogue" class={`nav-item ${currentPath.includes('/catalogue') ? 'active' : ''}`}><i class="fas fa-gem"></i></a>
-    <a href="/personnalisation" class={`nav-item ${currentPath.includes('/personnalisation') ? 'active' : ''}`}><i class="fas fa-wand-magic-sparkles"></i></a>
-    <a href="/devis" class={`nav-item ${currentPath.includes('/devis') ? 'active' : ''}`} style="position: relative;">
+    <a href="/histoire/" class={`nav-item ${currentPath.includes('/histoire') ? 'active' : ''}`}><i class="fas fa-book-open"></i></a>
+    <a href="/catalogue/" class={`nav-item ${currentPath.includes('/catalogue') ? 'active' : ''}`}><i class="fas fa-gem"></i></a>
+    <a href="/personnalisation/" class={`nav-item ${currentPath.includes('/personnalisation') ? 'active' : ''}`}><i class="fas fa-wand-magic-sparkles"></i></a>
+    <a href="/devis/" class={`nav-item ${currentPath.includes('/devis') ? 'active' : ''}`} style="position: relative;">
         <i class="fas fa-shopping-bag"></i>
-        <span class="js-badge-update">0</span>
+        <span class="js-badge-update" transition:persist>0</span>
     </a>
 </nav>
 
-<script>
-    // 1. Menu Burger Mobile
+<script is:inline>
+  // 1. On sort la fonction pour qu'elle soit accessible partout
+  function updateCartCounter() {
+    const panier = JSON.parse(localStorage.getItem('panier-gisele')) || [];
+    const badges = document.querySelectorAll('.js-badge-update');
+    const totalArticles = panier.length;
+    
+    badges.forEach(badge => {
+      badge.innerText = totalArticles;
+      // On affiche le badge seulement s'il y a des articles
+      badge.style.display = totalArticles > 0 ? 'inline-block' : 'none';
+    });
+  }
+
+  // 2. Gestion des événements Astro
+  document.addEventListener('astro:page-load', () => {
+    // Menu Burger
     const burger = document.getElementById('burger-menu');
     const links = document.getElementById('nav-links');
-    
     burger?.addEventListener('click', () => {
-        links?.classList.toggle('active');
+      links?.classList.toggle('active');
     });
 
-    // 2. Gestion du badge du panier
-    function updateCartCounter() {
-        // On récupère le panier depuis la mémoire du navigateur
-        const panier = JSON.parse(localStorage.getItem('panier-gisele')) || [];
-        
-        // On cible TOUS les badges (Desktop et Mobile)
-        const badges = document.querySelectorAll('.js-badge-update');
-        const totalArticles = panier.length;
-        
-        // On met à jour chaque badge
-        badges.forEach(badge => {
-            badge.innerText = totalArticles;
-            
-            // Si le panier n'est pas vide, on affiche le petit rond violet
-            if (totalArticles > 0) {
-                badge.style.display = 'inline-block';
-            } else {
-                badge.style.display = 'none'; // Sinon on le cache
-            }
-        });
-    }
+    // Mise à jour immédiate du badge au chargement de chaque nouvelle page
+    updateCartCounter();
+  });
 
-    // On exécute la fonction dès que le menu est chargé sur la page
-    document.addEventListener('DOMContentLoaded', updateCartCounter);
-    
-    window.addEventListener('panierMisAJour', updateCartCounter);
+  // 3. Écouter l'événement personnalisé (quand on ajoute depuis Catalogue ou Perso)
+  // On le met HORS du astro:page-load pour qu'il ne soit pas déclaré plusieurs fois
+  window.removeEventListener('panierMisAJour', updateCartCounter); // Nettoyage
+  window.addEventListener('panierMisAJour', updateCartCounter);
 </script>
 
 <style>
     /* Styles pour la version ordinateur (liens textes) */
     .nav-links a {
         text-decoration: none;
-        color: #967BB6;
+        color: #7b4b94;
         transition: color 0.3s ease;
     }
 
@@ -108,7 +104,7 @@ const currentPath = Astro.url.pathname;
     
     /* Styles pour la barre de navigation mobile (icônes) */
     .navbar-bottom-mobile .nav-item {
-        color: #967BB6; /* Couleur par défaut grisée */
+        color: #7b4b94; /* Couleur par défaut grisée */
         transition: all 0.3s ease;
     }
 

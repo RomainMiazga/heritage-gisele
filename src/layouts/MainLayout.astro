@@ -20,8 +20,69 @@ const { title, description } = Astro.props;
 
 		<Footer />
 
-		<script>
-			// Tu peux ajouter ici des scripts globaux si besoin
+		<script is:inline>
+			// Fonction pour initialiser l'effet de révélation au scroll
+			function initReveal() {
+				const observerOptions = {
+					root: null,
+					rootMargin: '0px',
+					threshold: 0.15 // Déclenche l'animation quand 15% de l'élément est visible
+				};
+
+				const observer = new IntersectionObserver((entries) => {
+					entries.forEach(entry => {
+						if (entry.isIntersecting) {
+							entry.target.classList.add('active');
+							// Optionnel : on peut arrêter d'observer l'élément une fois qu'il est apparu
+							// observer.unobserve(entry.target);
+						}
+					});
+				}, observerOptions);
+
+				// On cible tous les éléments qui ont la classe .reveal
+				const targets = document.querySelectorAll('.reveal');
+				targets.forEach(target => observer.observe(target));
+			}
+
+			// Lancement au premier chargement
+			document.addEventListener('DOMContentLoaded', initReveal);
+
+			// Relance le script après chaque changement de page (spécifique à Astro View Transitions)
+			document.addEventListener('astro:page-load', initReveal);
 		</script>
+
+		<style is:global>
+			/* --- SYSTÈME DE RÉVÉLATION (HIDDEN BOX AU SCROLL) --- */
+
+			/* État initial : l'élément est caché et décalé vers le bas */
+			.reveal {
+				opacity: 0 !important;
+				transform: translateY(40px) !important;
+				transition: opacity 0.8s ease-out, transform 0.8s ease-out !important;
+				will-change: opacity, transform;
+			}
+
+			/* État actif : l'élément apparaît et reprend sa place */
+			.reveal.active {
+				opacity: 1 !important;
+				transform: translateY(0) !important;
+			}
+
+			/* Utilitaires pour créer un effet de cascade (décalage de temps) */
+			.delay-1 { transition-delay: 0.2s !important; }
+			.delay-2 { transition-delay: 0.4s !important; }
+			.delay-3 { transition-delay: 0.6s !important; }
+
+			/* Optionnel : Une variante qui zoome au lieu de monter */
+			.reveal-zoom {
+				opacity: 0 !important;
+				transform: scale(0.9) !important;
+				transition: opacity 0.8s ease-out, transform 0.8s ease-out !important;
+			}
+			.reveal-zoom.active {
+				opacity: 1 !important;
+				transform: scale(1) !important;
+			}
+		</style>
 	</body>
 </html>

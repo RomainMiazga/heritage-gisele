@@ -1,0 +1,106 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout title="Conditions Générales de Vente - L'Héritage de Gisèle">
+  <main class="legal-container">
+    <h1 class="page-title">Conditions Générales de Vente (CGV)</h1>
+
+    <section>
+      <h2>Article 1 : Objet</h2>
+      <p>Les présentes CGV régissent la vente de chapelets artisanaux par l'entreprise <strong>"L'Héritage de Gisèle"</strong>.</p>
+    </section>
+
+    <section>
+      <h2>Article 2 : Produits et Prix</h2>
+      <p>
+        Les produits proposés sont des créations artisanales uniques ou en petites séries. Les prix sont indiqués en Euros TTC (TVA non applicable, article 293 B du CGI). Les frais de port sont calculés lors de la validation finale de la commande.
+      </p>
+    </section>
+
+    <section>
+      <h2>Article 3 : Commande et Paiement</h2>
+      <p>
+        La commande est validée après échange avec l'artisan. Le paiement s'effectue par <strong>[Virement / Cash / PayPal]</strong> selon les modalités convenues lors du contact.
+      </p>
+    </section>
+
+    <section>
+      <h2>Article 4 : Droit de rétractation</h2>
+      <p>
+        Conformément à l’article L221-18 du Code de la consommation, vous disposez d'un délai de 14 jours pour les produits <strong>standard</strong> du catalogue.
+      </p>
+      <div class="warning-box">
+        <p><strong>IMPORTANT (Exception) :</strong> Selon l’article L221-28, le droit de rétractation <strong>ne peut être exercé</strong> pour les produits confectionnés selon les spécifications du consommateur ou nettement personnalisés (cas des chapelets sur-mesure créés via le formulaire de personnalisation).</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Article 5 : Livraison</h2>
+      <p>
+        Les délais de fabrication varient selon la complexité (compter environ <strong>[X] jours</strong>). L'expédition est réalisée via <strong>[La Poste / Mondial Relay]</strong>. L'Héritage de Gisèle n'est pas responsable des retards liés aux transporteurs.
+      </p>
+    </section>
+
+    <section>
+      <h2>Article 6 : Litiges</h2>
+      <p>
+        En cas de problème, une solution amiable sera privilégiée. À défaut, les tribunaux français seront seuls compétents.
+      </p>
+    </section>
+  </main>
+</MainLayout>
+
+<style>
+  .legal-container {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 40px;
+    background: white;
+    border-radius: 15px;
+    line-height: 1.8;
+    color: #333;
+    box-shadow: 0 10px 30px rgba(123, 75, 148, 0.1);
+  }
+
+  .page-title {
+    font-family: var(--police-titre);
+    color: #7b4b94;
+    font-size: 3rem;
+    text-align: center;
+    border-bottom: 2px solid #f4f0fa;
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+  }
+
+  h2 {
+    color: #5e35b1;
+    margin-top: 40px;
+    font-size: 1.4rem;
+    border-left: 4px solid #7b4b94;
+    padding-left: 15px;
+  }
+
+  p {
+    margin-bottom: 20px;
+  }
+
+  .warning-box {
+    background: #fff8f8;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #ffcccc;
+    color: #d32f2f;
+    margin: 20px 0;
+  }
+
+  @media (max-width: 768px) {
+    .legal-container {
+      margin: 20px;
+      padding: 20px;
+    }
+    .page-title {
+      font-size: 2rem;
+    }
+  }
+</style>

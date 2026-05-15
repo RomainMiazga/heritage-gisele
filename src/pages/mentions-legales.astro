@@ -1,0 +1,114 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout title="Mentions légales - L'Héritage de Gisèle">
+  <main class="legal-container">
+    <h1 class="page-title">Mentions Légales</h1>
+
+    <section>
+      <h2>1. Présentation du site</h2>
+      <p>
+        En vertu de l'article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique, il est précisé aux utilisateurs du site l'identité des différents intervenants :
+      </p>
+      <div class="info-box">
+        <p><strong>Propriétaire / Éditeur :</strong> Laura DA SILVA DUARTE</p>
+        <p><strong>Statut :</strong> Entrepreneur Individuel</p>
+        <p><strong>Adresse :</strong> FAMECK - 57290</p>
+        <p><strong>Responsable publication :</strong> Laura DA SILVA DUARTE – <a href="mailto:laura.dsd0806@gmail.com">laura.dsd0806@gmail.com</a></p>
+        <p><strong>Webmaster :</strong> Romain MIAZGA – <a href="mailto:romain.miazga57@gmail.com">romain.miazga57@gmail.com</a></p>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. Hébergement</h2>
+      <p>
+        Le site est hébergé par : <strong>https://github.com/</strong><br />
+        Adresse de l'hébergeur : https://github.com/
+      </p>
+    </section>
+
+    <section>
+      <h2>3. Propriété intellectuelle</h2>
+      <p>
+        L'ensemble de ce site (textes, images, logos, créations de chapelets) relève de la législation française et internationale sur le droit d'auteur et la propriété intellectuelle. Toute reproduction est interdite sans accord préalable.
+      </p>
+    </section>
+
+    <section>
+      <h2>4. Données personnelles (RGPD)</h2>
+      <p>
+        Les informations recueillies via les formulaires de commande ou de personnalisation sont nécessaires pour le traitement de vos demandes. Elles ne sont en aucun cas cédées à des tiers.
+      </p>
+      <p>
+        Conformément à la loi « informatique et libertés », vous pouvez exercer votre droit d'accès aux données vous concernant et les faire rectifier en contactant : <a href="mailto:laura.dsd0806@gmail.com">laura.dsd0806@gmail.com</a>.
+      </p>
+    </section>
+  </main>
+</MainLayout>
+
+<style>
+  .legal-container {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 40px;
+    background: white;
+    border-radius: 15px;
+    line-height: 1.8;
+    color: #333;
+    box-shadow: 0 10px 30px rgba(123, 75, 148, 0.1);
+  }
+
+  .page-title {
+    font-family: var(--police-titre);
+    color: #7b4b94;
+    font-size: 3rem;
+    text-align: center;
+    border-bottom: 2px solid #f4f0fa;
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+  }
+
+  h2 {
+    color: #5e35b1;
+    margin-top: 40px;
+    font-size: 1.5rem;
+    border-left: 4px solid #7b4b94;
+    padding-left: 15px;
+  }
+
+  p {
+    margin-bottom: 20px;
+  }
+
+  .info-box {
+    background: #fbf9fc;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #eaddf2;
+  }
+
+  .info-box p {
+    margin-bottom: 10px;
+  }
+
+  a {
+    color: #7b4b94;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .legal-container {
+      margin: 20px;
+      padding: 20px;
+    }
+    .page-title {
+      font-size: 2rem;
+    }
+  }
+</style>

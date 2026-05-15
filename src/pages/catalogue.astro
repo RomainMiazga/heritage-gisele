@@ -2,23 +2,22 @@
 import { getCollection } from 'astro:content';
 import MainLayout from '../layouts/MainLayout.astro';
 
-// On récupère automatiquement tous les fichiers .md du dossier creations
 const toutesLesCreations = await getCollection('creations');
-
 const title = "Nos Créations - L'Héritage de Gisèle";
 ---
 
 <MainLayout title={title}>
-  <section class="catalogue-top container">
+  <div id="toast-container" class="global-toast-container"></div>
+
+  <section class="catalogue-top container reveal">
     <h1 class="page-title">Nos Créations</h1>
     <p>Chaque nœud est une intention, chaque perle un héritage.</p>
   </section>
 
-  <div class="grid-produits container">
+  <div class="grid-produits container reveal">
     {toutesLesCreations.map((crea) => (
       <div class="card-produit">
         <img src={`/images/${crea.data.image_url}`} alt={crea.data.nom} />
-        
         <h3>{crea.data.nom}</h3>
         <p class="produit-prix">{crea.data.prix} €</p>
         <p class="produit-description">{crea.data.description}</p>
@@ -30,7 +29,7 @@ const title = "Nos Créations - L'Héritage de Gisèle";
             data-nom={crea.data.nom}
             data-prix={crea.data.prix}
           >
-            <i class="fas fa-shopping-basket"></i> Sélectionner
+            <i class="fas fa-shopping-basket"></i> En stock
           </button>
         ) : (
           <span class="btn-ajouter btn-disabled">Victime de son succès</span>
@@ -40,73 +39,270 @@ const title = "Nos Créations - L'Héritage de Gisèle";
   </div>
 </MainLayout>
 
-<script>
-  // Logique du panier en LocalStorage
-  const buttons = document.querySelectorAll('.js-add-to-cart');
+<script is:inline>
+  document.addEventListener('astro:page-load', () => {
+    const buttons = document.querySelectorAll('.js-add-to-cart');
+    const toastContainer = document.getElementById('toast-container');
 
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const item = {
-        id: btn.dataset.id,
-        nom: btn.dataset.nom,
-        prix: btn.dataset.prix
+    const showToast = (nom) => {
+      toastContainer.innerHTML = ''; // Nettoie les anciens messages
+
+      const toast = document.createElement('div');
+      toast.className = 'confirmation-bar-fixed';
+      toast.innerHTML = `
+        <div class="conf-inner">
+          <div class="conf-text">
+            <i class="fas fa-check-circle"></i>
+            <span><strong>${nom}</strong> ajouté au panier</span>
+          </div>
+          <a href="/devis/" class="conf-btn">VOIR MON PANIER</a>
+        </div>
+      `;
+      
+      toastContainer.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.transform = 'translateY(-100%)';
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 600);
+      }, 4000);
+    };
+
+    buttons.forEach(btn => {
+      btn.onclick = (e) => {
+        e.preventDefault();
+        const item = {
+          id: btn.dataset.id, nom: btn.dataset.nom, prix: btn.dataset.prix
+        };
+
+        let panier = JSON.parse(localStorage.getItem('panier-gisele') || '[]');
+        panier.push(item);
+        localStorage.setItem('panier-gisele', JSON.stringify(panier));
+
+        window.dispatchEvent(new Event('panierMisAJour'));
+        showToast(item.nom);
       };
-
-      // 1. Récupérer le panier actuel
-      let panier = JSON.parse(localStorage.getItem('panier-gisele') || '[]');
-      
-      // 2. Ajouter le nouveau produit au panier
-      panier.push(item);
-      
-      // 3. Sauvegarder le panier mis à jour dans le navigateur
-      localStorage.setItem('panier-gisele', JSON.stringify(panier));
-
-      // 4. On envoie le signal magique à la navbar !
-      window.dispatchEvent(new Event('panierMisAJour'));
-
-      // 5. On prévient le client
-      alert(`${item.nom} a bien été ajouté à votre panier !`);
     });
   });
 </script>
 
-<style>
-  /* On réutilise tes styles du catalogue.php mais adaptés à Astro */
-  .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
-  .catalogue-top { text-align: center; padding: 60px 0; }
-  .page-title { font-family: var(--police-titre); font-size: 4em; color: var(--couleur-sombre); }
+<style is:global>
+  /* On utilise is:global pour être sûr que le CSS s'applique même hors du composant */
   
-  .grid-produits {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 30px;
-    padding-bottom: 80px;
+  .global-toast-container {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    z-index: 999999 !important; /* On passe au dessus de TOUT, même de la navbar */
+    pointer-events: none;
   }
 
+  .confirmation-bar-fixed {
+    pointer-events: auto;
+    background: #7b4b94 !important; /* violet sombre */
+    color: white !important;
+    width: 100% !important;
+    padding: 15px 0 !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important;
+    transition: all 0.5s ease-in-out;
+    display: block !important;
+    border-bottom: 2px solid #D4AF37 !important; /* Liseré doré */
+  }
+
+  .conf-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .conf-text {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.1rem !important;
+    font-family: serif;
+  }
+
+  .conf-text i {
+    color: #D4AF37 !important;
+    font-size: 1.5rem;
+  }
+
+  .conf-btn {
+    background: transparent !important;
+    color: white !important;
+    border: 1px solid white !important;
+    padding: 8px 18px !important;
+    border-radius: 4px !important;
+    text-decoration: none !important;
+    font-weight: bold !important;
+    font-size: 0.85rem !important;
+    transition: 0.3s !important;
+  }
+
+  .conf-btn:hover {
+    background: white !important;
+    color: #5e35b1 !important;
+  }
+
+/* 1. La Carte Produit */
   .card-produit {
     background: white;
     padding: 20px;
     border-radius: 15px;
     border: 1px solid #eee;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    transition: 0.3s;
+    
+    /* TRANSITION : On prépare le mouvement fluide */
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), 
+                box-shadow 0.4s ease, 
+                border-color 0.4s ease;
+    cursor: default;
   }
-  .card-produit:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
 
-  .card-produit img { width: 100%; height: 250px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; }
-  .produit-prix { color: var(--couleur-sombre); font-weight: bold; font-size: 1.2em; margin: 10px 0; }
-  .produit-description { font-size: 0.9em; color: #666; margin-bottom: 20px; flex-grow: 1; }
+  /* EFFET AU SURVOL DE LA CARTE */
+  .card-produit:hover {
+    transform: translateY(-10px); /* La carte monte */
+    box-shadow: 0 15px 35px rgba(123, 75, 148, 0.15); /* Ombre violette douce */
+    border-color: #eaddf2; /* La bordure devient légèrement violette */
+  }
 
+  /* 2. L'Image du Produit */
+  .card-produit .image-wrapper {
+    overflow: hidden; /* INDISPENSABLE pour que le zoom ne dépasse pas */
+    border-radius: 10px;
+    margin-bottom: 15px;
+  }
+
+  .card-produit img { 
+    width: 100%; 
+    height: 250px; 
+    object-fit: cover; 
+    border-radius: 10px;
+    /* TRANSITION pour le zoom de l'image */
+    transition: transform 0.6s ease;
+  }
+
+  /* ZOOM DE L'IMAGE AU SURVOL */
+  .card-produit:hover img {
+    transform: scale(1.1); /* L'image grossit de 10% */
+  }
+
+  /* 3. Le Titre du Produit */
+  .card-produit h3 {
+    margin: 15px 0 10px 0;
+    transition: color 0.3s ease;
+  }
+
+  .card-produit:hover h3 {
+    color: #7b4b94; /* Le titre passe en violet au survol */
+  }
+/* Bouton Ajouter au Panier - Look Premium */
   .btn-ajouter {
-    background: var(--couleur-sombre);
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 30px;
-    cursor: pointer;
-    font-weight: bold;
+    position: relative;
+    overflow: hidden; /* Pour l'effet de brillance */
+    background: #7b4b94 !important;
+    color: white !important;
+    border: none !important;
+    padding: 14px 28px !important;
+    border-radius: 50px !important; /* Forme pilule plus moderne */
+    cursor: pointer !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Espace entre l'icône et le texte */
+    text-decoration: none !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 4px 12px rgba(123, 75, 148, 0.2) !important;
   }
-  .btn-disabled { background: #ccc; cursor: not-allowed; }
+
+  /* Effet au survol du bouton */
+  .btn-ajouter:hover {
+    background: #6a3d82 !important; /* Un violet un poil plus profond */
+    transform: scale(1.05); /* Le bouton gonfle légèrement */
+    box-shadow: 0 6px 20px rgba(123, 75, 148, 0.4) !important;
+  }
+
+  /* Animation de l'icône de panier au survol */
+  .btn-ajouter:hover i {
+    transform: translateX(3px) rotate(-10deg);
+  }
+
+  .btn-ajouter i {
+    transition: transform 0.3s ease;
+    color: #D4AF37; /* L'icône en doré pour le rappel de l'artisanat */
+    font-size: 1.1rem;
+  }
+
+  /* Effet de brillance (Glossy) qui passe sur le bouton au survol */
+  .btn-ajouter::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 20%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(30deg);
+    transition: all 0.7s;
+  }
+
+  .btn-ajouter:hover::after {
+    left: 120%;
+  }
+
+  /* Bouton épuisé - Plus discret et élégant */
+  .btn-disabled {
+    background: #f0f0f0 !important;
+    color: #999 !important;
+    border: 1px solid #e0e0e0 !important;
+    padding: 14px 28px !important;
+    border-radius: 50px !important;
+    cursor: not-allowed !important;
+    display: inline-block !important;
+    font-size: 0.9rem !important;
+    font-style: italic;
+  }
+
+  @media (max-width: 768px) {
+    .conf-inner {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+
+  /* Catalogue Styles classiques */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+  .catalogue-top { text-align: center; padding: 60px 0; }
+  .page-title { font-size: 3em; color: #7b4b94; }
+  .grid-produits {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    padding-bottom: 80px;
+  }
+  .card-produit {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid #eee;
+    text-align: center;
+  }
+  .card-produit img { width: 100%; height: 250px; object-fit: cover; border-radius: 10px; }
+
+  .btn-disabled {
+    background: #ccc !important; /* Gris clair */
+    color: #666 !important;      /* Texte gris foncé */
+    cursor: not-allowed !important;
+    display: inline-block !important;
+    padding: 12px 25px !important;
+    border-radius: 30px !important;
+    font-weight: bold !important;
+  }
 </style>
