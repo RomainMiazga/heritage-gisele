@@ -9,12 +9,12 @@ const title = "Nos Créations - L'Héritage de Gisèle";
 <MainLayout title={title}>
   <div id="toast-container" class="global-toast-container"></div>
 
-  <section class="catalogue-top container reveal">
+  <section class="catalogue-top container">
     <h1 class="page-title">Nos Créations</h1>
     <p>Chaque nœud est une intention, chaque perle un héritage.</p>
   </section>
 
-  <div class="grid-produits container reveal">
+  <div class="grid-produits container">
     {toutesLesCreations.map((crea) => (
       <div class="card-produit">
         <img src={`/images/${crea.data.image_url}`} alt={crea.data.nom} />
@@ -279,7 +279,7 @@ const title = "Nos Créations - L'Héritage de Gisèle";
 
   /* Catalogue Styles classiques */
   .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
-  .catalogue-top { text-align: center; padding: 60px 0; }
+  .catalogue-top { text-align: center; padding: 20px 0; }
   .page-title { font-size: 3em; color: #7b4b94; }
   .grid-produits {
     display: grid;
