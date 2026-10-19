@@ -9,15 +9,18 @@
     --couleur-fond: #faf8fc; /* Blanc très légèrement violacé */
     --police-titre: 'Great Vibes', cursive;
     --police-texte: 'Lora', serif;
+	color-scheme: light only;
 }
 
 body {
     font-family: var(--police-texte);
     margin: 0; 
-    /* Un dégradé très subtil pour donner de la profondeur */
+    background-color: #faf8fc; 
     background: radial-gradient(circle at top, #faf8fc 0%, #f3eff7 100%);
+    background-attachment: fixed; /* Évite que le dégradé ne se coupe sur mobile */
     color: #4a4a4a;
     padding-top: 80px; 
+    min-height: 100vh;
 }
 
 /* =========================================

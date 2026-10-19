@@ -36,7 +36,7 @@ const description = "Découvrez l'univers de l'Héritage de Gisèle : création 
   <section class="home-section container reveal">
     <div class="section-grid">
       <div class="section-image">
-        <img src="/images/illustration-gisele.png" class="img-interactive" alt="L'Histoire de l'Héritage de Gisèle" />
+        <img src="/images/illustration-gisele.webp" class="img-interactive" alt="L'Histoire de l'Héritage de Gisèle" />
       </div>
       <div class="section-text">
         <span class="subtitle-gold">Une tradition vivante</span>
@@ -52,15 +52,14 @@ const description = "Découvrez l'univers de l'Héritage de Gisèle : création 
 
   <section class="home-section bg-light reveal">
     <div class="container section-grid reverse">
-      <div class="section-image">
-        <img src="/images/bois_olive.webp" class="img-interactive" alt="Gros plan sur un chapelet en pierres naturelles" />
+      <div class="section-image2">
+        <img src="/images/chapelet-lau-3.webp" class="img-interactive" alt="Gros plan sur un chapelet en perles de qualité" />
       </div>
       <div class="section-text">
         <span class="subtitle-gold">Éclat & Spiritualité</span>
         <h2>Nos Créations</h2>
         <p>
-          Pierres naturelles, bois précieux et fils de soie se rencontrent pour former des objets de prière robustes et élégants. 
-          Parcourez nos dizainiers et chapelets classiques.
+          Perles sélectionnées avec soin et fils résistants se rencontrent pour former des objets de prière robustes et élégants.
         </p>
         <a href="/catalogue/" class="btn-outline">Voir le catalogue</a>
       </div>
@@ -73,7 +72,7 @@ const description = "Découvrez l'univers de l'Héritage de Gisèle : création 
         <i class="fas fa-gem gold-icon"></i>
         <h2>Une Création à votre Image</h2>
         <p>
-          Choisissez vos pierres, la couleur du fil et les médailles qui font sens pour vous. 
+          Choisissez vos perles, la couleur et les médailles qui font sens pour vous. 
           Je vous accompagne pour créer le compagnon de prière parfait.
         </p>
         <a href="/personnalisation/" class="btn-hero-collection">Demander un devis personnalisé</a>
@@ -86,20 +85,20 @@ const description = "Découvrez l'univers de l'Héritage de Gisèle : création 
     <div class="insta-header">
       <span class="subtitle-gold">Immersion</span>
       <h3>Suivez l'Atelier</h3>
-      <p>Découvrez les coulisses des créations et les nouvelles pierres arrivées à l'atelier.</p>
+      <p>Découvrez les coulisses des créations et les nouveaux chapelets arrivés à l'atelier.</p>
     </div>
 
     <div class="insta-grid">
       <div class="insta-item">
-        <img src="/images/atelier1.jpg" alt="Détail perles" />
+        <img src="/images/chapelet-livia-1.webp" alt="Détail perles" />
         <div class="insta-overlay"><i class="fab fa-instagram"></i></div>
       </div>
       <div class="insta-item">
-        <img src="/images/atelier2.jpg" alt="Travail en cours" />
+        <img src="/images/chapelet-lau-2.webp" alt="Travail en cours" />
         <div class="insta-overlay"><i class="fab fa-instagram"></i></div>
       </div>
       <div class="insta-item">
-        <img src="/images/atelier3.jpg" alt="Chapelet terminé" />
+        <img src="/images/chapelet-lau-3.webp" alt="Chapelet terminé" />
         <div class="insta-overlay"><i class="fab fa-instagram"></i></div>
       </div>
     </div>
@@ -118,7 +117,7 @@ const description = "Découvrez l'univers de l'Héritage de Gisèle : création 
       <span class="subtitle-gold">À votre écoute</span>
       <h2>Contactez-moi</h2>
       <p>
-        Une question sur une pierre, un délai ou une personnalisation particulière ? <br> 
+        Une question sur un chapelet, un délai ou une personnalisation particulière ? <br> 
         Je vous réponds avec joie sous 24 à 48h.
       </p>
       <a href="/contact/" class="btn-outline">Envoyer un message</a>
@@ -152,7 +151,7 @@ const description = "Découvrez l'univers de l'Héritage de Gisèle : création 
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/images/hero-bg.webp') center/cover no-repeat;
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/images/chapelet-lau-2.webp') center/cover no-repeat;
     z-index: 0;
     transition: transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
@@ -243,7 +242,15 @@ const description = "Découvrez l'univers de l'Héritage de Gisèle : création 
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   }
-
+  
+    .section-image2 img {
+    width: 100%;
+    height: 550px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+  
   .subtitle-gold {
     color: var(--couleur-accent, #D4AF37);
     text-transform: uppercase;
@@ -354,8 +361,9 @@ const description = "Découvrez l'univers de l'Héritage de Gisèle : création 
 .insta-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 25px; /* Plus d'espace pour laisser respirer */
-  margin-bottom: 40px;
+  gap: 25px;
+  max-width: 1100px; /* Passé à 1100px pour agrandir les cases */
+  margin: 30px auto 40px auto;
 }
 
 .insta-item {
@@ -371,6 +379,7 @@ const description = "Découvrez l'univers de l'Héritage de Gisèle : création 
 .insta-item img {
   width: 100%;
   height: 100%;
+  object-position: center 73%;
   object-fit: cover;
   transition: transform 0.6s ease;
 }
@@ -466,6 +475,14 @@ const description = "Découvrez l'univers de l'Héritage de Gisèle : création 
     margin: 0 10px; /* Un peu d'air sur les côtés sur mobile */
   }
 
+     .section-image2 img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+ 
  
   .instagram-section {
     padding: 60px 0;

@@ -6,7 +6,7 @@ import Layout from '../layouts/MainLayout.astro';
   <main>
     <section class="page-header">
         <h1 class="page-title" style="color: #7b4b94; margin-top: 0;">Créations Sur-Mesure</h1>
-        <p class="page-subtitle">Composons ensemble le chapelet qui vous accompagnera.</p>
+        <p class="page-subtitle">Composons ensemble le chapelet qui vous accompagnera. (page en  cours de création)</p>
     </section>
 
     <div class="form-container">
@@ -16,19 +16,19 @@ import Layout from '../layouts/MainLayout.astro';
                 <label class="titre-champ"><i class="fas fa-spa"></i> Choix des perles - Je vous Salue Marie</label>
                 <div class="checkbox-grid">
                     <label class="perle-card">
-                        <input type="radio" name="perles_ave" value="Quartz Rose" required>
+                        <input type="radio" name="perles_ave" value="..." required>
                         <img src="/images/perle-quartz-rose.jpg" alt="Quartz Rose" onerror="this.src='/images/placeholder.jpg';">
-                        <span>Quartz Rose</span>
+                        <span>...</span>
                     </label>
                     <label class="perle-card">
                         <input type="radio" name="perles_ave" value="Pierre de Lune">
                         <img src="/images/perle-pierre-lune.jpg" alt="Pierre de Lune" onerror="this.src='/images/placeholder.jpg';">
-                        <span>Pierre de Lune</span>
+                        <span>...</span>
                     </label>
                     <label class="perle-card">
                         <input type="radio" name="perles_ave" value="Bois d'Olivier">
                         <img src="/images/perle-bois-olivier.jpg" alt="Bois d'Olivier" onerror="this.src='/images/placeholder.jpg';">
-                        <span>Bois d'Olivier</span>
+                        <span>...</span>
                     </label>
                 </div>
             </div>
@@ -39,17 +39,17 @@ import Layout from '../layouts/MainLayout.astro';
                     <label class="perle-card">
                         <input type="radio" name="perles_pater" value="Quartz Rose" required>
                         <img src="/images/perle-quartz-rose.jpg" alt="Quartz Rose" onerror="this.src='/images/placeholder.jpg';">
-                        <span>Quartz Rose</span>
+                        <span>...</span>
                     </label>
                     <label class="perle-card">
                         <input type="radio" name="perles_pater" value="Améthyste">
                         <img src="/images/perle-amethyste.jpg" alt="Améthyste" onerror="this.src='/images/placeholder.jpg';">
-                        <span>Améthyste</span>
+                        <span>...</span>
                     </label>
                     <label class="perle-card">
                         <input type="radio" name="perles_pater" value="Onyx Noir">
                         <img src="/images/perle-onyx.jpg" alt="Onyx Noir" onerror="this.src='/images/placeholder.jpg';">
-                        <span>Onyx Noir</span>
+                        <span>...</span>
                     </label>
                 </div>
             </div>
@@ -60,12 +60,12 @@ import Layout from '../layouts/MainLayout.astro';
                     <label class="perle-card">
                         <input type="radio" name="perles_liaison" value="Hématite" required>
                         <img src="/images/perle-hematite.jpg" alt="Hématite" onerror="this.src='/images/placeholder.jpg';">
-                        <span>Hématite</span>
+                        <span>...</span>
                     </label>
                     <label class="perle-card">
                         <input type="radio" name="perles_liaison" value="Cristal de Roche">
                         <img src="/images/perle-cristal.jpg" alt="Cristal de Roche" onerror="this.src='/images/placeholder.jpg';">
-                        <span>Cristal de Roche</span>
+                        <span>...</span>
                     </label>
                 </div>
             </div>
@@ -76,12 +76,12 @@ import Layout from '../layouts/MainLayout.astro';
                     <label class="perle-card">
                         <input type="radio" name="style_croix" value="Croix Argentée" required>
                         <img src="/images/croix-argentee.jpg" alt="Croix Argentée" onerror="this.src='/images/placeholder.jpg';">
-                        <span>Argentée</span>
+                        <span>...</span>
                     </label>
                     <label class="perle-card">
                         <input type="radio" name="style_croix" value="Croix Dorée">
                         <img src="/images/croix-doree.jpg" alt="Croix Dorée" onerror="this.src='/images/placeholder.jpg';">
-                        <span>Dorée</span>
+                        <span>...</span>
                     </label>
                 </div>
             </div>
@@ -92,12 +92,12 @@ import Layout from '../layouts/MainLayout.astro';
                     <label class="perle-card">
                         <input type="radio" name="style_medaillon" value="Médaillon Argenté" required>
                         <img src="/images/medaillon-argente.jpg" alt="Médaillon Argenté" onerror="this.src='/images/placeholder.jpg';">
-                        <span>Argenté</span>
+                        <span>...</span>
                     </label>
                     <label class="perle-card">
                         <input type="radio" name="style_medaillon" value="Médaille Miraculeuse">
                         <img src="/images/medaillon-miraculeuse.jpg" alt="Médaille Miraculeuse" onerror="this.src='/images/placeholder.jpg';">
-                        <span>Miraculeuse</span>
+                        <span>...</span>
                     </label>
                 </div>
             </div>
@@ -126,7 +126,7 @@ import Layout from '../layouts/MainLayout.astro';
     .checkbox-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; }
     .perle-card { cursor: pointer; display: flex; flex-direction: column; align-items: center; text-align: center; background: #fdfaf6; border: 2px solid #eee; border-radius: 12px; padding: 15px 10px; transition: all 0.3s ease; position: relative; }
     .perle-card img { width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.3s ease; }
-    
+    .page-title { font-size: 3em; color: #7b4b94; }
     .perle-card input[type="radio"] { position: absolute; opacity: 0; }
     
     .perle-card span { font-weight: bold; color: #5e35b1; font-size: 0.95rem; }
