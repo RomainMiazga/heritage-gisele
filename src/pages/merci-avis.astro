@@ -1,0 +1,107 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout title="Merci ! - L'Héritage de Gisèle">
+  <section class="success-page container">
+    <div class="success-box">
+      <div class="icon-box">
+        <i class="fas fa-heart"></i>
+      </div>
+      
+      <h1>Merci pour votre avis !</h1>
+      <p>Votre avis a bien été envoyé.</p>
+      <p>Il sera publié très prochainement sur le site après lecture. Merci de contribuer au livre d'or de L'Héritage de Gisèle !</p>
+      
+      <div class="actions">
+        <a href="/" class="btn-primary">Retour à l'accueil</a>
+        <a href="/avis/" class="btn-secondary">Voir le livre d'or</a>
+        <a href="/catalogue/" class="btn-secondary">Voir d'autres créations</a>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .success-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+    padding: 40px 20px;
+  }
+
+  .success-box {
+    background: white;
+    padding: 50px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(94, 53, 177, 0.08);
+    text-align: center;
+    max-width: 600px;
+    border-top: 5px solid #7b4b94; /* La touche violette de Gisèle */
+  }
+
+  .icon-box {
+    font-size: 4rem;
+    color: #967BB6;
+    margin-bottom: 20px;
+    animation: battement 2s infinite ease-in-out;
+  }
+
+  /* Petite animation sympa sur le cœur */
+  @keyframes battement {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  h1 {
+    font-family: var(--police-titre, 'serif');
+    color: var(--couleur-sombre, #333);
+    margin-bottom: 15px;
+    font-size: 2.5rem;
+  }
+
+  p {
+    color: #666;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    line-height: 1.5;
+  }
+
+  .actions {
+    margin-top: 40px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary, .btn-secondary {
+    padding: 12px 25px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+
+  .btn-primary {
+    background: #7b4b94;
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: #5e35b1;
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    background: #fbf9fc;
+    color: #7b4b94;
+    border: 1px solid #7b4b94;
+  }
+
+  .btn-secondary:hover {
+    background: #f4f0fa;
+    transform: translateY(-2px);
+  }
+</style>

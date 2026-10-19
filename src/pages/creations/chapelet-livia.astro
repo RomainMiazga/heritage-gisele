@@ -61,6 +61,19 @@ const description = "Découvrez le Chapelet Livia, une douce protection pour une
             <i class="fas fa-shopping-basket"></i> Ajouter au panier
           </button>
         </div>
+		<!-- Encadré "Laisser un avis" sur la fiche produit -->
+<div class="box-laisser-avis">
+  <div class="box-content">
+    <i class="fas fa-heart-circle-plus icon-avis"></i>
+    <div class="text-group">
+      <h4>Vous avez adopté ce chapelet ?</h4>
+      <p>Partagez votre expérience et aidez les autres clients dans leur choix.</p>
+    </div>
+  </div>
+  <a href={`/avis/?produit=${encodeURIComponent("Chapelet Livia")}`} class="btn-laisser-avis">
+    <i class="fas fa-pen-nib"></i> Laisser un avis
+  </a>
+</div>
       </div>
     </div>
   </div>
@@ -175,6 +188,53 @@ const description = "Découvrez le Chapelet Livia, une douce protection pour une
     display: block;
     margin: 0 auto;
   }
+  
+  .box-laisser-avis {
+  background: #faf8fc;
+  border: 1px solid rgba(179, 157, 219, 0.35);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin: 25px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: 0 4px 15px rgba(123, 75, 148, 0.05);
+}
+
+.box-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.icon-avis {
+  font-size: 1.8rem;
+  color: #D4AF37; /* Touche dorée */
+  flex-shrink: 0;
+}
+
+.btn-laisser-avis {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #7b4b94;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(123, 75, 148, 0.2);
+}
+
+.btn-laisser-avis:hover {
+  background-color: #5e35b1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(94, 53, 177, 0.3);
+}
 
   /* Ajustement de la grille de miniatures responsive */
   .miniatures-grid {
@@ -331,5 +391,22 @@ const description = "Découvrez le Chapelet Livia, une douce protection pour une
       width: 55px;
       height: 55px;
     }
+	
+	  .box-laisser-avis {
+    flex-direction: column;
+    text-align: center;
+    padding: 18px;
+  }
+
+  .box-content {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .btn-laisser-avis {
+    width: 100%;
+    justify-content: center;
+  }
+}
   }
 </style>

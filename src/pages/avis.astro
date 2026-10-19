@@ -1,0 +1,311 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+
+const title = "Avis & Témoignages - L'Héritage de Gisèle";
+const description = "Découvrez les retours et témoignages de nos clients ou partagez votre expérience.";
+
+// Liste des avis existants (statiques pour le moment)
+const tousLesAvis = [
+  {
+    nom: "Marie L.",
+    produit: "Chapelet Lau",
+    date: "12/10/2026",
+    note: 5,
+    commentaire: "Une douceur incroyable, la qualité est au rendez-vous. Merci pour cette belle création."
+  },
+  {
+    nom: "Sophie T.",
+    produit: "Chapelet Livia",
+    date: "04/10/2026",
+    note: 5,
+    commentaire: "Chapelet magnifique, commandé pour le baptême de ma nièce. Emballage très soigné et finitions magnifiques !"
+  }
+];
+---
+
+<MainLayout title={title} description={description}>
+  <div class="container page-avis">
+    <div class="avis-header text-center">
+      <h1 class="page-title">Avis & Livre d'Or</h1>
+      <p class="subtitle">
+        Vos retours sont nos plus belles récompenses. Découvrez l'expérience de nos clients ou partagez la vôtre.
+      </p>
+    </div>
+
+    <div class="avis-grid-container">
+      <!-- Section Formulaire -->
+      <div class="form-section">
+        <div class="form-box">
+          <h2><i class="fas fa-pen-nib" style="color: #D4AF37;"></i> Laisser un avis</h2>
+          
+          <form action="/api/avis/" method="POST" id="form-avis">
+            <input type="hidden" name="sujet" value="Avis Client" />
+
+            <div class="form-group">
+              <label for="nom">Votre Prénom / Nom :</label>
+              <input type="text" id="nom" name="name" required placeholder="ex: Marie L." />
+            </div>
+
+            <div class="form-group">
+              <label for="email">Votre Email :</label>
+              <input type="email" id="email" name="email" required placeholder="ex: marie@exemple.com" />
+            </div>
+
+            <div class="form-group">
+              <label for="produit">Création concernée :</label>
+              <input type="text" id="produit" name="produit" placeholder="ex: Chapelet Lau" />
+            </div>
+
+            <div class="form-group">
+              <label for="note">Votre Note :</label>
+              <select id="note" name="note">
+                <option value="5">★★★★★ (5/5 - Excellent)</option>
+                <option value="4">★★★★☆ (4/5 - Très bon)</option>
+                <option value="3">★★★☆☆ (3/5 - Moyen)</option>
+                <option value="2">★★☆☆☆ (2/5 - Mauvais)</option>
+                <option value="1">★☆☆☆☆ (1/5 - Très mauvais)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="commentaire">Votre Message / Témoignage :</label>
+              <textarea id="commentaire" name="message" rows="5" required placeholder="Racontez-nous votre expérience..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit-avis">
+              <i class="fas fa-paper-plane"></i> Envoyer mon avis
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Section Affichage des avis -->
+      <div class="liste-avis-section">
+        <h2><i class="fas fa-heart" style="color: #D4AF37;"></i> Ce qu'ils en pensent</h2>
+        <div class="avis-cards-list">
+          {tousLesAvis.map(item => (
+            <div class="avis-card">
+              <div class="avis-card-header">
+                <div class="author-info">
+                  <strong>{item.nom}</strong>
+                  <span class="produit-tag">{item.produit}</span>
+                </div>
+                <span class="avis-date">{item.date}</span>
+              </div>
+              <div class="stars">{"★".repeat(item.note)}</div>
+              <p class="avis-text">"{item.commentaire}"</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</MainLayout>
+
+<script is:inline>
+  document.addEventListener('astro:page-load', () => {
+    // 1. Pré-remplissage du paramètre 'produit' si présent dans l'URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const produitParam = urlParams.get('produit');
+    
+    if (produitParam) {
+      const inputProduit = document.getElementById('produit');
+      if (inputProduit) {
+        inputProduit.value = produitParam;
+      }
+    }
+
+    // 2. Gestion de l'envoi du formulaire et redirection vers /merci-avis
+    const form = document.getElementById('form-avis');
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (submitBtn) submitBtn.disabled = true;
+
+        const formData = new FormData(form);
+
+        try {
+          const response = await fetch(form.action, {
+            method: 'POST',
+            body: formData
+          });
+
+          if (response.ok) {
+            // Redirection vers la page merci-avis
+            window.location.href = '/merci-avis/';
+          } else {
+            alert("Une erreur s'est produite lors de l'envoi. Veuillez réessayer.");
+            if (submitBtn) submitBtn.disabled = false;
+          }
+        } catch (error) {
+          console.error("Erreur lors de la soumission :", error);
+          alert("Impossible d'envoyer le formulaire pour le moment.");
+          if (submitBtn) submitBtn.disabled = false;
+        }
+      });
+    }
+  });
+</script>
+
+<style is:global>
+  .page-avis {
+    padding-top: 40px;
+    padding-bottom: 80px;
+  }
+
+  .avis-header {
+    margin-bottom: 50px;
+    text-align: center;
+  }
+
+  .subtitle {
+    color: #666;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 10px auto 0 auto;
+  }
+
+  .avis-grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  /* Formulaire */
+  .form-box {
+    background: #faf8fc;
+    border: 1px solid rgba(179, 157, 219, 0.3);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(123, 75, 148, 0.05);
+  }
+
+  .form-box h2 {
+    font-size: 1.3rem;
+    color: #5e35b1;
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 18px;
+  }
+
+  .form-group label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #4a3b52;
+    margin-bottom: 6px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    box-sizing: border-box;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #7b4b94;
+    box-shadow: 0 0 0 3px rgba(123, 75, 148, 0.1);
+  }
+
+  .btn-submit-avis {
+    width: 100%;
+    background-color: #7b4b94;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+  }
+
+  .btn-submit-avis:hover {
+    background-color: #5e35b1;
+  }
+
+  /* Cartes d'avis */
+  .liste-avis-section h2 {
+    font-size: 1.3rem;
+    color: #5e35b1;
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+
+  .avis-cards-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .avis-card {
+    background: white;
+    border: 1px solid #eee;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+  }
+
+  .avis-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .author-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .produit-tag {
+    background: #faf8fc;
+    color: #7b4b94;
+    font-size: 0.75rem;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+    border: 1px solid rgba(123, 75, 148, 0.2);
+  }
+
+  .avis-date {
+    font-size: 0.8rem;
+    color: #999;
+  }
+
+  .stars {
+    color: #D4AF37;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+  }
+
+  .avis-text {
+    color: #555;
+    font-style: italic;
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 768px) {
+    .avis-grid-container {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
